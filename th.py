@@ -2,10 +2,17 @@ import re
 import numpy as np
 import pandas as pd
 from hazm import *
+import timeit
 
 
-df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/data.csv') 
+#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/data.csv') 
+df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/sample.csv') 
+
 #df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/fixed_data.csv')
+
+userstory = 'به عنوان یک کاربر جدید من می‌خواهم پس از ورود به سیستم، یک راهنمای گام به گام برای انجام وظایف ابتدایی دریافت کنم تا بتوانم بدون نیاز به آموزش اضافی، کارکرد هر گزینه را درک کنم. '
+    
+
 
 def missing(df:pd.DataFrame) -> pd.DataFrame:
     print('Shape of DataFrame:', df.shape)
@@ -32,9 +39,10 @@ def delete_missing(df:pd.DataFrame) -> pd.DataFrame:
     df = df.dropna()
     print('Shape after dropping missing values:', df.shape)
 
+# start of phase 1
 def userstory_check_first(userstory):
-    pattern_old = r"^به عنوان یک\s+(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)\.$"
-    pattern_old2 = r"^به عنوان یک\s+(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+)$"
+    #pattern_old = r"^به عنوان یک\s+(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)\.$"
+    #pattern_old2 = r"^به عنوان یک\s+(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+)$"
     pattern = r"^به عنوان\s+(?:یک\s+)?(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)$"
 
 
@@ -62,16 +70,44 @@ def userstory_check_final(df: pd.DataFrame) -> pd.DataFrame:
     df_cleaned = df.dropna()
     df_cleaned.to_csv(output_file, index=False, encoding='utf-8-sig')
     print("shape of dataframe after deleting invalid user story is: ",df_cleaned.shape[0])
+    print('all user stories are reviewed and valid userstories saved in userstoryanalysis.csv')
     return df_cleaned
 
+def phase_one(df:pd.DataFrame) -> pd.DataFrame:
+    output_file = "/Users/farrr/Desktop/Desktop/project/phase_one.csv"
+    df_cleaned = userstory_check_final(df)
+    df_cleaned.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('phase one is done')
+    return df_cleaned
+
+# end of phase 1
+
+# start of phase 2
+def phase_two(df:pd.DataFrame)->pd.DataFrame:
+    output_file = "/Users/farrr/Desktop/Desktop/project/phase_two.csv"
+    corrected_informal_df = informal_normalize_dataframe(df)
+    normalized_dataframe = normalize_dataframe(corrected_informal_df)
+    tokenized_df = tokenize_dataframe(normalized_dataframe)
+    stopwords_df = stopwords_dataframe(tokenized_df)
+    lemma_df = lemmatizer_dataframe(stopwords_df)
+    lemma_df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    return lemma_df
+
+
+
+#end of phase 2
+
+""" این تابع با توجه به اینکه بخش‌های مختلف داستان کاربری را جدا نمی‌کند فعلا در دستور کار نمی‌باشد
 def userstory_check(df: pd.DataFrame) -> pd.DataFrame:
     output_file = "/Users/farrr/Desktop/Desktop/project/userstorycheck.csv"
     pattern = r"^به عنوان(.+)می‌خواهم(.+)بتوانم(.+)"
     pattern2 = r"^به عنوان\s+(.+?)،?\s+می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)\.$"
     df_filtered = df[df['userstory'].str.contains(pattern2, regex=True, na=False)]
     df_filtered.to_csv(output_file, index=False, encoding='utf-8-sig')
-    return df_filtered
+    return df_filtered """
 
+
+""" این تابع تنها برای تست فاز ۱ نوشته شده بود
 def check_function_userstory(userstories: list):
     # pattern = r"^\bبه عنوان\b(.+)\bمن می‌خواهم\b(.+)\bتا بتوانم\b(.+)"
     pattern = r"^به عنوان(.+)من می‌خواهم(.+)تا بتوانم(.+)"
@@ -97,7 +133,7 @@ def check_function_userstory(userstories: list):
         print("\nInvalid User Stories:")
         for story in invalid_userstories:
             print("-", story)
-    return correct_userstories
+    return correct_userstories """
     
 def fix_persian_halfspace(df:pd.DataFrame) -> pd.DataFrame:
     half_space = '\u200c'
@@ -105,12 +141,12 @@ def fix_persian_halfspace(df:pd.DataFrame) -> pd.DataFrame:
     #print(df)
     return df
     
-def normalizer(df: pd.DataFrame) -> pd.DataFrame: #commented in order to use other functions
+""" def normalizer(df: pd.DataFrame) -> pd.DataFrame: #commented in order to use other functions
     normalizer = hazm.Normalizer()
     df['normalized_userstory'] = df['userstory'].apply(normalizer.normalize)
     output_file = "/Users/farrr/Desktop/Desktop/project/normalized_data.csv"
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    return df
+    return df """
 
 def tokenize(userstory):
      tokens = word_tokenize(userstory)
@@ -118,18 +154,39 @@ def tokenize(userstory):
 
 def tokenize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     output_file = "/Users/farrr/Desktop/Desktop/project/tokenized_data.csv"
-    df['tokenized_userstory'] = df['userstory'].apply(tokenize)
+    df['tokenized_userstory'] = df['normalized_dataframe'].apply(tokenize)
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('Tokenization is done')
     return df
 
-def normalize(userstory):
-    normalized_text = Normalizer.normalize(userstory)
+def informal_normalize(userstory):
+    normalizer = InformalNormalizer()
+    informal_normalized_text = normalizer.normalize(userstory)
+    small_array = informal_normalized_text[0]
+    first_elements = [inner[0] for inner in small_array if len(inner) > 0]
+    normalized_text = ' '.join(first_elements)
+    return normalized_text
+
+
+
+
+def informal_normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    output_file = "/Users/farrr/Desktop/Desktop/project/informal_normalized_data.csv"
+    df['informal_normalized_userstory'] = df['userstory'].apply(informal_normalize)
+    df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('Informal Normalization is done')
+    return df
+
+def normalize(userstory: str):
+    normalizer = Normalizer()
+    normalized_text = normalizer.normalize(userstory)
     return normalized_text
 
 def normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     output_file = "/Users/farrr/Desktop/Desktop/project/tokenized_data.csv"
-    df['normalized_dataframe'] = df['userstory'].apply(normalize)
+    df['normalized_dataframe'] = df['informal_normalized_userstory'].apply(normalize)
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('Normalization is done')
     return df
 
 def stopwords(tokens):
@@ -141,6 +198,7 @@ def stopwords_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     output_file = "/Users/farrr/Desktop/Desktop/project/stopwords_data.csv"
     df['stopwords_userstory'] = df['tokenized_userstory'].apply(stopwords)
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('Stopwords are removed')
     return df
 
 def lemmatizer(tokens):
@@ -151,12 +209,19 @@ def lemmatizer(tokens):
 def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     output_file = "/Users/farrr/Desktop/Desktop/project/lemmatized_data.csv"
     df['lemmatized_userstory'] = df['stopwords_userstory'].apply(lemmatizer)
+    df['string_lemmatized_userstory'] = df['lemmatized_userstory'].apply(lambda x: ' '.join(x))
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('Lemmatization is done')
     return df
 
 
 def main():
-    userstory_check_final(df)
+    output_file = "/Users/farrr/Desktop/Desktop/project/final.csv"
+    phase_one_df = phase_one(df)
+    phase_two_df = phase_two(phase_one_df)
+    phase_two_df.to_csv(output_file, index=False, encoding='utf-8-sig')
+
+    #userstory_check_final(df)
     #df_half = fix_persian_halfspace(df)
     #filtered_df=userstory_check(df)
     #missing(filtered_df)
@@ -166,12 +231,14 @@ def main():
     #tokenized_df = tokenize_dataframe(df)
     #stopwords_df = stopwords_dataframe(tokenized_df)
     #lemmatizer_dataframe(stopwords_df)
+    
+    
 
 
- 
 
-main()
-
+#main()
+execution_time = timeit.timeit(main, number=1)  # اجرای یک‌بار کد
+print(f"زمان اجرا: {execution_time:.5f} ثانیه")
     
 
 
@@ -186,3 +253,4 @@ main()
 #droping_white_space(df)
 #fix_persian_halfspace(df)
 #normalizer(df)
+#informal_normalize(userstory)
