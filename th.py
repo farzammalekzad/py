@@ -8,8 +8,10 @@ import time
 
 
 #df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/data.csv') 
-df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/sample.csv') 
-    
+#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/sample.csv') 
+df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/final.csv') 
+
+
 def show_status():
     while True:
         print("Status: Code is Running ...")
@@ -99,7 +101,7 @@ def phase_two(df:pd.DataFrame)->pd.DataFrame:
 
 
 
-#end of phase 2
+
 
 """ این تابع با توجه به اینکه بخش‌های مختلف داستان کاربری را جدا نمی‌کند فعلا در دستور کار نمی‌باشد
 def userstory_check(df: pd.DataFrame) -> pd.DataFrame:
@@ -218,6 +220,48 @@ def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     print('Lemmatization is done')
     return df
 
+#end of phase 2
+
+#start of phase 3
+def userstory_nonfunctional(lemma_userstory: str) -> list:
+    arr = []
+    pattern = [
+        {'type': 'learning skill 01', 'pattern':r'((آموزش|آموزشی).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 02', 'pattern':r'((راهنما|راهنمایی).+(دسترسی).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 03', 'pattern':r'((واضح|شفاف).+(به‌راحتی|راحتی).+(سریع|سرعت).+(یادگیری|گیر|گرفت))'},
+        {'type': 'learning skill 04', 'pattern':r'((سریع|سرعت).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 05', 'pattern':r'((مشکل|اشکال).+(سوال|پرسش).+(کمک|یاری).+(سریع|سرعت))'},
+        {'type': 'learning skill 06', 'pattern':r'((توضیح|توضیحات).+(وظایف|کارها|امور|وظیفه).+(یادگیری|گیر|گرفت))'},
+        {'type': 'learning skill 07', 'pattern':r'((آموزش|آموزشی).+(راحتی|به‌راحتی).+(یادگیری|گیر|گرفت))'},
+        {'type': 'learning skill 08', 'pattern':r'((فیدبک|بازخورد).+(یادگیری|گیر|گرفت))'},
+        {'type': 'learning skill 09', 'pattern':r'((عملکرد|کارکرد).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 11', 'pattern':r'((یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری).+(سریع|سرعت))'},
+        {'type': 'learning skill 12', 'pattern':r'((سوال|پرسش).+(داشت|دار).+(راحتی|به‌راحتی).+(یادگیری|گیر|گرفت))'},
+        {'type': 'learning skill 13', 'pattern':r'((راهنمایی|راهنما).+(راحتی|به‌راحتی).+(کارکرد|عملکرد).+(سریع|سرعت))'},
+        {'type': 'learning skill 14', 'pattern':r'((یادگیری|گیر|گرفت).+(سریع|سرعت).+(استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 15', 'pattern':r'((مینیمال|ساده).+(طراحی).+(راحتی|به‌راحتی))'},
+        {'type': 'learning skill 16', 'pattern':r'((تنظیمات).+(بازگرداندن|بازگردان).+(غلط|صحیح|درست|اشتباه).+(جلوگیری|ممانعت|اقدام|استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 17', 'pattern':r'((سریع|سرعت).+(یادگیری|گیر|گرفت|آشنا).+(استفاده|بهره‌برداری))'},
+        {'type': 'learning skill 18', 'pattern':r'((وظایف|کارها|امور|وظیفه).+(پیشنهاد|توصیه).+(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت).+(یادگیری|گیر|گرفت))'},
+    ]
+    for p in pattern:
+        if re.search(p['pattern'], lemma_userstory):
+            arr.append({'type':p['type']})
+            print('Nonfunctional user stories are extracted')
+    return arr
+
+def userstory_nonfunctional_identification(df: pd.DataFrame):
+    output_file = "/Users/farrr/Desktop/Desktop/project/nonfunctional_userstory.csv"
+    df.loc[:,'nonfunctional_userstory'] = df['string_lemmatized_userstory'].apply(userstory_nonfunctional)
+    df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('All Nonfunctional user stories are extracted')
+
+def test():
+    userstory_nonfunctional_identification(df)
+    print('phase 3 is done')
+#end of phase 3
+
+
 
 def main():
     output_file = "/Users/farrr/Desktop/Desktop/project/final.csv"
@@ -243,13 +287,13 @@ def main():
 
 #main()
 try:
-    execution_time = timeit.timeit(main, number=1) 
-    print(f"execution time is : {execution_time:.5f} seconds")
+    execution_time = timeit.timeit(test, number=1) 
+    print(f"execution time is {execution_time:.5f} seconds")
 except KeyboardInterrupt:
     print('Code is terminated by user')
     exit()
 finally:
-    print('Finish the code see the result in final.csv')
+    print('see the result in final.csv')
     exit()
 
 
