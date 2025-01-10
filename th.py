@@ -225,39 +225,96 @@ def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 #start of phase 3
 def userstory_nonfunctional(lemma_userstory: str) -> list:
     arr = []
+    training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
+    task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها)'
+    learning_terms = r'(یادگیری|گیر|گرفت|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط)'
+    use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن)'
+    feedback_terms = r'(فیدبک|بازخورد|نظر|بازخوردهای کاربران|انتقاد سازنده|پاسخ)'
+    clear_terms = r'(واضح|شفاف|روشن|بی‌ابهام|ساده|سرراست|گویا|بدون پیچیدگی)'
+    fast_terms = r'(سریع|سرعت|فوری|بی‌درنگ|چابک|تند|شتاب)'
+    help_terms = r'(کمک|یاری|راهنمایی|حمایت|پشتیبانی|همراهی)'
+    question_terms = r'(سوال|پرسش|استعلام|درخواست اطلاعات|ابهام)'
+    guide_terms = r'(راهنما|راهنمایی|دستورالعمل|کتابچه راهنما|هندبوک|مستندات|راهنمای کاربر|راهبری)'
+    suggestion_terms = r'(پیشنهاد|توصیه|ایده|نکته|مشاوره|نظر)'
+    minimal_terms = r'(مینیمال|ساده|کمینه|مختصر|بی‌زحمت|کاربردی)'
+    design_terms = r'(طراحی|ساختار|چیدمان|قالب|طرح‌بندی|نقشه)'
+    setting_terms = r'(تنظیمات|پیکربندی|کنفیگ|پاراگراف‌ها|تنظیم)'
+    restore_terms = r'(بازگرداندن|بازگردان|بازسازی|ترمیم|برگرداندن)'
+    wrong_terms = r'(غلط|صحیح|درست|اشتباه|خطا|نادرست|بی‌دقتی)'
+    prevention_terms = r'(جلوگیری|ممانعت|پیشگیری|سد کردن|بازداری|مهار)'
+    change_terms = r'(تغییر|تغییرات|اصلاح|بازنگری|دگرگونی)'
+    preview_terms = r'(پیش نمایش|پیش‌نمایش)'
+    accuracy_terms = r'(صحت|درستی|صحیح|درست|بی‌خطا|بی‌نقص)'
+    able_terms = r'(توانست|توان)'
+    again_terms = r'(مجدد|بازگشت|برگردم|دوباره|از نو|تکرار)'
+    continue_terms = r'(ادامه|پیشبرد|دنبال کردن|ادامه دادن|پیش‌روی)'
+    previous_terms = r'(قبلی|گذشته|فعالیت‌های قبلی|پیشین|سوابق قبلی|کارهای گذشته)'
+    event_terms = r'(رویدادها|سوابق|سابقه|تاریخچه|اتفاقات|حوادث|فعالیت‌ها)'
+    access_terms = r'(دستیابی|دسترسی|راه‌یابی|ورود|اتصال به|باز کردن)'
+    review_terms = r'(مرور|بازبینی|بررسی|ارزیابی|نگاه مجدد|مرور کردن)'
+    update_terms = r'(آپدیت|ارتقا|بازسازی|بروزرسانی|به‌روزرسانی|بهبود|به‌روز)'
+    reference_terms = r'(مراجع|مرجع|منابع|مآخذ|ارجاعات|اشارات|استنادها)'
+    progress_terms = r'(پیشرفت|پیشروی|ترقی|رشد|بهبود|حرکت رو به جلو)'
+    save_terms = r'(حفظ|بایگانی|ذخیره|سیو|نگهداری|ثبت)'
+    path_terms = r'(مسیر|راه|جهت‌گیری|روش|راهکار|جهت)'
+    order_terms = r'(سفارش|درخواست|رزرو)'
+    ease_terms = r'(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت|ساده|بدون دردسر)'
+    compensation_terms = r'(جبرانی|ناهماهنگی|آشفتگی|سرگشتگی|سردرگمی|تعادل‌بخشی|جبران خسارت)'
+    restore_terms = r'(بازگرداندن|بازگردان)'
+    error_terms = r'(خطا|اشتباه|غلط|نقص|ایراد|مشکل)'
+    performance_terms = r'(عملکرد|کارکرد|بازدهی|پرفورمنس|کارایی|بهره‌وری)'
+    skill_terms = r'(مهارت|مهارت‌ها|توانایی|قابلیت|مهارت‌آموزی|توانمندی)'
+    issue_terms = r'(مشکل|اشکال|چالش|معضل|دشواری|نقص)'
+    describe_terms = r'(توضیح|توضیحات|شرح|بیان|توضیح دادن|تعریف)'
+    have_terms = r'(داشت|دار|دارای|برخورداری از|دریافت|به‌دست آوردن)'
+    right_terms = r'(صحیح|درست|صحت|درستی|بی‌خطا|بی‌اشتباه)'
+    follow_terms = r'(پیگیری|پیگیر|دنبال کردن|ردیابی)'
+    presentation_terms = r'(ارایه|نمایش|پیش‌نمایش|ارائه‌دهی|معرفی)'
+    ui_terms = r'(رابط کاربری|رابط گرافیکی|رابط کاربر|رابط گرافیک)'
+    customize_terms = r'(سفارشی‌سازی|سفارشی|سفارشی‌کردن|شخصی‌سازی)'
+    need_terms = r'(نیاز|نیازمندی|نیازها|نیازمندی‌ها|نیازهای)'
+    identification_terms = r'(شناسایی|شناساندن|شناسایی کردن|شناسایی‌کردن)'
+
+
     pattern = [
-        #{'type': 'learning skill 01', 'pattern':r'((آموزش|آموزشی).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
-        #{'type': 'learning skill 02', 'pattern':r'((راهنما|راهنمایی).+(دسترسی).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 03', 'pattern':r'((واضح|شفاف).+(به‌راحتی|راحتی).+(سریع|سرعت).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 04', 'pattern':r'((سریع|سرعت).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 05', 'pattern':r'((مشکل|اشکال).+(سوال|پرسش).+(کمک|یاری).+(سریع|سرعت))'},
-        # {'type': 'learning skill 06', 'pattern':r'((توضیح|توضیحات).+(وظایف|کارها|امور|وظیفه).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 07', 'pattern':r'((آموزش|آموزشی).+(راحتی|به‌راحتی).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 08', 'pattern':r'((فیدبک|بازخورد).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 09', 'pattern':r'((عملکرد|کارکرد).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 11', 'pattern':r'((یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری).+(سریع|سرعت))'},
-        # {'type': 'learning skill 12', 'pattern':r'((سوال|پرسش).+(داشت|دار).+(راحتی|به‌راحتی).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 13', 'pattern':r'((راهنمایی|راهنما).+(راحتی|به‌راحتی).+(کارکرد|عملکرد).+(سریع|سرعت))'},
-        # {'type': 'learning skill 14', 'pattern':r'((یادگیری|گیر|گرفت).+(سریع|سرعت).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 15', 'pattern':r'((مینیمال|ساده).+(طراحی).+(راحتی|به‌راحتی))'},
-        # {'type': 'learning skill 16', 'pattern':r'((تنظیمات).+(بازگرداندن|بازگردان).+(غلط|صحیح|درست|اشتباه).+(جلوگیری|ممانعت|اقدام|استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 17', 'pattern':r'((سریع|سرعت).+(یادگیری|گیر|گرفت|آشنا).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 18', 'pattern':r'((وظایف|کارها|امور|وظیفه).+(پیشنهاد|توصیه).+(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 19', 'pattern':r'((راهنمایی|راهنما).+(سریع|سرعت).+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 20', 'pattern':r'((راحتی|به‌راحتی).+(سفارش).+(تنظیم).+(به‌سادگی|سادگی|سریع|سرعت|به‌سرعت|ساده))'},
-        # {'type': 'learning skill 21', 'pattern':r'((تغییر|تغییرات).+(پیش نمایش|پیش‌نمایش).+(صحت|درستی|صحیح|درست)/+(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت))'},
-        # {'type': 'learning skill 22', 'pattern':r'((ثبت|دخیره).+(توانست|توان).+(مجدد|بازگشت|برگردم).+(ادامه|پیشبرد))'},#error
-        # {'type': 'learning skill 23', 'pattern':r'((راهنمایی|راهنما).+(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت).+(استفاده|بهره‌برداری).+(جبرانی|ناهماهنگی|آشفتگی|سرگشتگی|سردرگمی))'},
-        # {'type': 'learning skill 24', 'pattern':r'((آموزشی|آموزش).+(یادگیری|گیر|گرفت).+(پیشرفت))'},
-        # {'type': 'learning skill 25', 'pattern':r'((آموزش|آموزشی).+(حفظ|بایگانی|ذخیره).+(قبلی|گذشته).+(مرور|بازبینی))'},
-        # {'type': 'learning skill 26', 'pattern':r'((آموزش|دوره آموزشی).+(مسیر).+(راحتی|به‌راحتی|سادگی|سریع|سرعت|به‌سرعت).+(ادامه))'},
-        # {'type': 'learning skill 27', 'pattern':r'((قبلی|فعالیت‌ های قبلی).+(رویدادها|سوابق|سابقه|تاریخچه).+(راه‌یابی|دستیابی|دسترسی).+(مرور|بازبینی|پیگیری))'},
-        # {'type': 'learning skill 28', 'pattern':r'((آپدیت|ارتقا|بازسازی|بروزرسانی|به‌روزرسانی).+(توضیحات|راهنما).+(راحتی|به‌راحتی|سادگی|سریع|سرعت|به‌سرعت).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 29', 'pattern':r'((آموزش|آموزشی).+(مراجع|مرجع‌|منابع|مآخذ).+(راحتی|به‌راحتی|سادگی|سریع|سرعت|به‌سرعت)?.+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 30', 'pattern':r'((یادگیری|گیر|گرفت).+(حفظ|بایگانی|ذخیره).+(پیشرفت).+(راحتی|به‌راحتی|سادگی|سریع|سرعت|به‌سرعت).+(مجدد|بازگشت|برگردم))'},
-        # {'type': 'learning skill 31', 'pattern':r'((مراجع|مرجع‌|منابع|مآخذ)?.+(آموزش|آموزشی).+(دسترسی).+(راهنما|راهنمایی).+(راحتی|به‌راحتی|سادگی|سریع|سرعت|به‌سرعت)?.+(یادگیری|گیر|گرفت))'},
-        # {'type': 'learning skill 32', 'pattern':r'((آموزشی|آموزش|راهنما).+(ارایه|نمایش).+(یادگیری|گیر|گرفت).+(استفاده|بهره‌برداری))'},
-        # {'type': 'learning skill 33', 'pattern':r'((آموزش|آموزشی).+(مراجع|مرجع‌|منابع|مآخذ).+(یادگیری|گیر|گرفت))'},
+        {'type': 'learning skill 00', 'pattern':fr'{training_terms}.+{learning_terms}.+{use_terms}'},
+        {'type': 'learning skill 02', 'pattern':fr'{guide_terms}.+{access_terms}.+{learning_terms}.+{use_terms}'},
+        {'type': 'learning skill 03', 'pattern':fr'{clear_terms}.+{ease_terms}.+{fast_terms}.+{learning_terms}'},
+        {'type': 'learning skill 04', 'pattern':fr'({fast_terms}.+{learning_terms}.+{use_terms})'},
+        {'type': 'learning skill 05', 'pattern':fr'({issue_terms}.+{question_terms}.+{help_terms}.+{ease_terms})'},
+        {'type': 'learning skill 06', 'pattern':fr'({describe_terms}.+{task_terms}.+{learning_terms})'},
+        {'type': 'learning skill 07', 'pattern':fr'({training_terms}.+{ease_terms}.+{learning_terms})'},
+        {'type': 'learning skill 08', 'pattern':fr'({feedback_terms}.+{learning_terms})'},
+        {'type': 'learning skill 09', 'pattern':fr'({performance_terms}.+{learning_terms}.+{use_terms})'},
+        {'type': 'learning skill 11', 'pattern':fr'({learning_terms}.+{use_terms}.+{fast_terms})'},
+        {'type': 'learning skill 12', 'pattern':fr'({question_terms}.+{have_terms}.+{ease_terms}.+{learning_terms})'},
+        {'type': 'learning skill 13', 'pattern':fr'({guide_terms}.+{ease_terms}.+{performance_terms}.+{fast_terms})'},
+        {'type': 'learning skill 14', 'pattern':fr'({learning_terms}.+{ease_terms}.+{use_terms})'},
+        {'type': 'learning skill 15', 'pattern':fr'({minimal_terms}.+{design_terms}.+{ease_terms})'},
+        {'type': 'learning skill 16', 'pattern':fr'({setting_terms}.+{restore_terms}.+{wrong_terms}.+({prevention_terms}|{use_terms}))'},
+        {'type': 'learning skill 17', 'pattern':fr'({ease_terms}.+({learning_terms}|آشنا).+{use_terms})'},
+        {'type': 'learning skill 18', 'pattern':fr'({task_terms}.+{suggestion_terms}.+{ease_terms}.+{learning_terms})'},
+        {'type': 'learning skill 19', 'pattern':fr'({guide_terms}.+{ease_terms}.+{learning_terms})'},
+        {'type': 'leafning skill 20', 'pattern':fr'({ease_terms}.+{order_terms}.+{setting_terms}.+{ease_terms})'},
+        {'type': 'learning skill 21', 'pattern':fr'({change_terms}.+{preview_terms}.+{right_terms}.+{ease_terms})'},
+        {'type': 'learning skill 22', 'pattern':fr'({save_terms}.+(توانست|توان).+{again_terms}.+{continue_terms})'},#error
+        {'type': 'learning skill 23', 'pattern':fr'({guide_terms}.+{ease_terms}.+{use_terms}.+{compensation_terms})'},
+        {'type': 'learning skill 24', 'pattern':fr'({training_terms}.+{learning_terms}.+{progress_terms})'},
+        {'type': 'learning skill 25', 'pattern':fr'({guide_terms}.+{save_terms}.+{previous_terms}.+{review_terms})'},
+        {'type': 'learning skill 26', 'pattern':fr'({training_terms}.+{path_terms}.+{ease_terms}.+{continue_terms})'},
+        {'type': 'learning skill 27', 'pattern':fr'({previous_terms}.+{event_terms}.+{access_terms}.+({review_terms}|{follow_terms}))'},
+        {'type': 'learning skill 28', 'pattern':fr'({update_terms}.+({describe_terms}|{guide_terms}).+{ease_terms}.+{learning_terms}.+{use_terms})'},
+        {'type': 'learning skill 29', 'pattern':fr'({training_terms}.+{reference_terms}.+{ease_terms}?.+{learning_terms})'},
+        {'type': 'learning skill 30', 'pattern':fr'({learning_terms}.+{save_terms}.+{progress_terms}.+{ease_terms}.+{again_terms})'},
+        {'type': 'learning skill 31', 'pattern':fr'({reference_terms}?.+{training_terms}.+{access_terms}.+({guide_terms}|{describe_terms}).+{ease_terms})'},
+        {'type': 'learning skill 32', 'pattern':fr'(({learning_terms}|{training_terms}).+{presentation_terms}.+{learning_terms}.+{use_terms})'},
+        {'type': 'learning skill 33', 'pattern':fr'({training_terms}.+{reference_terms}.+{learning_terms})'},
+        {'type': 'learning skill 34', 'pattern':fr'({guide_terms}.+{task_terms}.+{able_terms}.+{learning_terms})'},
+        {'type': 'learning skill 35', 'pattern':fr'({guide_terms}.+{learning_terms}.+{task_terms})'},
+        {'type': 'learning skill 36', 'pattern':fr'({ui_terms}.+{clear_terms}.+{ease_terms}.+{training_terms}.+{learning_terms})'},
+        {'type': 'learning skill 37', 'pattern':fr'({customize_terms}.+{setting_terms}.+{ease_terms}.+({task_terms}|{access_terms}))'},
+        {'type': 'learning skill 38', 'pattern':fr'({update_terms}.+({learning_terms}|{training_terms}).+{update_terms}.+{change_terms}.+{learning_terms})'},
+        {'type': 'learning skill 39', 'pattern':fr'({training_terms}.+{identification_terms}.+({guide_terms}|{describe_terms}).+{ease_terms}.+{use_terms})'},
 
     ]
     for p in pattern:
