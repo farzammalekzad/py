@@ -227,7 +227,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     arr = []
     training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
     task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها)'
-    learning_terms = r'(یادگیری|گیر|گرفت|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط)'
+    learning_terms = r'(یادگیری|گیر|گرفت|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط|آگاه)'
     use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن)'
     feedback_terms = r'(فیدبک|بازخورد|نظر|بازخوردهای کاربران|انتقاد سازنده|پاسخ)'
     clear_terms = r'(واضح|شفاف|روشن|بی‌ابهام|ساده|سرراست|گویا|بدون پیچیدگی)'
@@ -257,14 +257,14 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     progress_terms = r'(پیشرفت|پیشروی|ترقی|رشد|بهبود|حرکت رو به جلو)'
     save_terms = r'(حفظ|بایگانی|ذخیره|سیو|نگهداری|ثبت)'
     path_terms = r'(مسیر|راه|جهت‌گیری|روش|راهکار|جهت)'
-    order_terms = r'(سفارش|درخواست|رزرو)'
+    order_terms = r'(سفارش|درخواست|رزرو|سفار)'
     ease_terms = r'(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت|ساده|بدون دردسر)'
     compensation_terms = r'(جبرانی|ناهماهنگی|آشفتگی|سرگشتگی|سردرگمی|تعادل‌بخشی|جبران خسارت)'
     restore_terms = r'(بازگرداندن|بازگردان)'
     error_terms = r'(خطا|اشتباه|غلط|نقص|ایراد|مشکل)'
     performance_terms = r'(عملکرد|کارکرد|بازدهی|پرفورمنس|کارایی|بهره‌وری)'
     skill_terms = r'(مهارت|مهارت‌ها|توانایی|قابلیت|مهارت‌آموزی|توانمندی)'
-    issue_terms = r'(مشکل|اشکال|چالش|معضل|دشواری|نقص)'
+    issue_terms = r'(مشکل|اشکال|چالش|معضل|دشواری|نقص|دردسر)'
     describe_terms = r'(توضیح|توضیحات|شرح|بیان|توضیح دادن|تعریف)'
     have_terms = r'(داشت|دار|دارای|برخورداری از|دریافت|به‌دست آوردن)'
     right_terms = r'(صحیح|درست|صحت|درستی|بی‌خطا|بی‌اشتباه)'
@@ -274,47 +274,92 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     customize_terms = r'(سفارشی‌سازی|سفارشی|سفارشی‌کردن|شخصی‌سازی)'
     need_terms = r'(نیاز|نیازمندی|نیازها|نیازمندی‌ها|نیازهای)'
     identification_terms = r'(شناسایی|شناساندن|شناسایی کردن|شناسایی‌کردن)'
+    product_terms = r'(محصول|محصولات|محصولات نرم‌افزاری|محصول نرم‌افزاری)'
+    buy_terms = r'(خرید|خریداری|خرید کردن|خریداری کردن)'
+    time_terms = r'(زمان|زمان‌بندی|زمان‌برنامه‌ریزی|زمان‌بندی‌کردن|وقت)'
+    long_terms = r'(طولانی|طولانی‌مدت|طولانی‌مدتی|بلند|بلندمدت|بلند‌مدت)'
+    search_terms = r'(جستجو|جستجوی|جستجو کردن|جستجوی کردن)'
+    Feature_terms = r'(ویژگی|ویژگی‌ها|ویژگی‌های|ویژگی‌های نرم‌افزار|ویژگی نرم‌افزار)'
+    address_terms = r'(آدرس|آدرس‌ها|آدرس‌های|آدرس‌های اینترنتی|آدرس اینترنتی)'
+    receive_terms = r'(دریافت|دریافت کردن|دریافت نمودن|دریافت‌کردن)'
+    delivery_terms = r'(تحویل|تحویل دادن|تحویل نمودن|تحویل‌دادن)'
+    add_terms= r'(اضافه|اضافه کردن|افزودن|افزودن به|اضافه نمودن)'
+    grading_terms= r'(رتبه|رتبه‌بندی|اولویت|اولویت‌بندی)'
+    status_terms= r'(وضعیت|وضعیت‌ها|وضعیت‌های|وضعیت‌های نرم‌افزار|وضعیت نرم‌افزار)'
+    future_terms= r'(آینده|آینده‌نگری|آینده‌نگری کردن|آینده‌نگری‌کردن)'
+    subscription_terms= r'(اشتراک|اشتراک‌ گذارد|اشتراک‌گذاری|اشتراک‌گذاری‌کردن)'
+    discount_terms= r'(تخفیف|تخفیفات|تخفیف‌ها|تخفیف‌های|تخفیف‌های ویژه)'
+    language_terms= r'(زبان|زبان‌ها|زبان‌های|زبان‌های برنامه‌نویسی|زبان برنامه‌نویسی)'
+    site_terms= r'(سایت|سایت‌ها|سایت‌های|سایت‌های اینترنتی|سایت اینترنتی)'
+    content_terms= r'(محتوا|محتوای|محتوای سایت|محتوای وب|محتوای وب‌سایت)'
+    study_terms= r'(مطالعه|مطالعه کردن|مطالعه‌کردن|خواندن|خواندن مطالب|خواندن مطالب)'
+    account_terms= r'(حساب|حساب‌ها|حساب‌های|حساب‌های کاربری|حساب کاربری| حساب‌های اجتماعی| حساب اجتماعی)'
+    code_terms= r'(کد|کد تخفیف|کد تخفیفی|کد تخفیف‌ها|کد تخفیف‌های|کد تخفیف‌های ویژه)'
+    observe_terms= r'(مشاهده|مشاهده کردن|مشاهده‌کردن|نگاه کردن|نگاه‌کردن)'
+    detail_terms= r'(جزئیات|جزئیات بیشتر|جزئیات بیشتری|جزئیات بیشتری|جزئیات بیشتری)'
+    decision_terms= r'(تصمیم|تصمیم‌گیری|تصمیم‌گیری کردن|تصمیم‌گیری‌کردن)'
+    experience_terms= r'(تجربه|تجربه‌ها|تجربه‌های|تجربه‌های کاربری|تجربه کاربری|تجربیات)'
+
+
 
 
     pattern = [
-        {'type': 'learning skill 00', 'pattern':fr'{training_terms}.+{learning_terms}.+{use_terms}'},
-        {'type': 'learning skill 02', 'pattern':fr'{guide_terms}.+{access_terms}.+{learning_terms}.+{use_terms}'},
-        {'type': 'learning skill 03', 'pattern':fr'{clear_terms}.+{ease_terms}.+{fast_terms}.+{learning_terms}'},
-        {'type': 'learning skill 04', 'pattern':fr'({fast_terms}.+{learning_terms}.+{use_terms})'},
-        {'type': 'learning skill 05', 'pattern':fr'({issue_terms}.+{question_terms}.+{help_terms}.+{ease_terms})'},
-        {'type': 'learning skill 06', 'pattern':fr'({describe_terms}.+{task_terms}.+{learning_terms})'},
-        {'type': 'learning skill 07', 'pattern':fr'({training_terms}.+{ease_terms}.+{learning_terms})'},
-        {'type': 'learning skill 08', 'pattern':fr'({feedback_terms}.+{learning_terms})'},
-        {'type': 'learning skill 09', 'pattern':fr'({performance_terms}.+{learning_terms}.+{use_terms})'},
-        {'type': 'learning skill 11', 'pattern':fr'({learning_terms}.+{use_terms}.+{fast_terms})'},
-        {'type': 'learning skill 12', 'pattern':fr'({question_terms}.+{have_terms}.+{ease_terms}.+{learning_terms})'},
-        {'type': 'learning skill 13', 'pattern':fr'({guide_terms}.+{ease_terms}.+{performance_terms}.+{fast_terms})'},
-        {'type': 'learning skill 14', 'pattern':fr'({learning_terms}.+{ease_terms}.+{use_terms})'},
-        {'type': 'learning skill 15', 'pattern':fr'({minimal_terms}.+{design_terms}.+{ease_terms})'},
-        {'type': 'learning skill 16', 'pattern':fr'({setting_terms}.+{restore_terms}.+{wrong_terms}.+({prevention_terms}|{use_terms}))'},
-        {'type': 'learning skill 17', 'pattern':fr'({ease_terms}.+({learning_terms}|آشنا).+{use_terms})'},
-        {'type': 'learning skill 18', 'pattern':fr'({task_terms}.+{suggestion_terms}.+{ease_terms}.+{learning_terms})'},
-        {'type': 'learning skill 19', 'pattern':fr'({guide_terms}.+{ease_terms}.+{learning_terms})'},
-        {'type': 'leafning skill 20', 'pattern':fr'({ease_terms}.+{order_terms}.+{setting_terms}.+{ease_terms})'},
-        {'type': 'learning skill 21', 'pattern':fr'({change_terms}.+{preview_terms}.+{right_terms}.+{ease_terms})'},
-        {'type': 'learning skill 22', 'pattern':fr'({save_terms}.+(توانست|توان).+{again_terms}.+{continue_terms})'},#error
-        {'type': 'learning skill 23', 'pattern':fr'({guide_terms}.+{ease_terms}.+{use_terms}.+{compensation_terms})'},
-        {'type': 'learning skill 24', 'pattern':fr'({training_terms}.+{learning_terms}.+{progress_terms})'},
-        {'type': 'learning skill 25', 'pattern':fr'({guide_terms}.+{save_terms}.+{previous_terms}.+{review_terms})'},
-        {'type': 'learning skill 26', 'pattern':fr'({training_terms}.+{path_terms}.+{ease_terms}.+{continue_terms})'},
-        {'type': 'learning skill 27', 'pattern':fr'({previous_terms}.+{event_terms}.+{access_terms}.+({review_terms}|{follow_terms}))'},
-        {'type': 'learning skill 28', 'pattern':fr'({update_terms}.+({describe_terms}|{guide_terms}).+{ease_terms}.+{learning_terms}.+{use_terms})'},
-        {'type': 'learning skill 29', 'pattern':fr'({training_terms}.+{reference_terms}.+{ease_terms}?.+{learning_terms})'},
-        {'type': 'learning skill 30', 'pattern':fr'({learning_terms}.+{save_terms}.+{progress_terms}.+{ease_terms}.+{again_terms})'},
-        {'type': 'learning skill 31', 'pattern':fr'({reference_terms}?.+{training_terms}.+{access_terms}.+({guide_terms}|{describe_terms}).+{ease_terms})'},
-        {'type': 'learning skill 32', 'pattern':fr'(({learning_terms}|{training_terms}).+{presentation_terms}.+{learning_terms}.+{use_terms})'},
-        {'type': 'learning skill 33', 'pattern':fr'({training_terms}.+{reference_terms}.+{learning_terms})'},
-        {'type': 'learning skill 34', 'pattern':fr'({guide_terms}.+{task_terms}.+{able_terms}.+{learning_terms})'},
-        {'type': 'learning skill 35', 'pattern':fr'({guide_terms}.+{learning_terms}.+{task_terms})'},
-        {'type': 'learning skill 36', 'pattern':fr'({ui_terms}.+{clear_terms}.+{ease_terms}.+{training_terms}.+{learning_terms})'},
-        {'type': 'learning skill 37', 'pattern':fr'({customize_terms}.+{setting_terms}.+{ease_terms}.+({task_terms}|{access_terms}))'},
-        {'type': 'learning skill 38', 'pattern':fr'({update_terms}.+({learning_terms}|{training_terms}).+{update_terms}.+{change_terms}.+{learning_terms})'},
-        {'type': 'learning skill 39', 'pattern':fr'({training_terms}.+{identification_terms}.+({guide_terms}|{describe_terms}).+{ease_terms}.+{use_terms})'},
+        # {'type': 'learning skill 00', 'pattern':fr'{training_terms}.+{learning_terms}.+{use_terms}'},
+        # {'type': 'learning skill 02', 'pattern':fr'{guide_terms}.+{access_terms}.+{learning_terms}.+{use_terms}'},
+        # {'type': 'learning skill 03', 'pattern':fr'{clear_terms}.+{ease_terms}.+{fast_terms}.+{learning_terms}'},
+        # {'type': 'learning skill 04', 'pattern':fr'({fast_terms}.+{learning_terms}.+{use_terms})'},
+        # {'type': 'learning skill 05', 'pattern':fr'({issue_terms}.+{question_terms}.+{help_terms}.+{ease_terms})'},
+        # {'type': 'learning skill 06', 'pattern':fr'({describe_terms}.+{task_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 07', 'pattern':fr'({training_terms}.+{ease_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 08', 'pattern':fr'({feedback_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 09', 'pattern':fr'({performance_terms}.+{learning_terms}.+{use_terms})'},
+        # {'type': 'learning skill 11', 'pattern':fr'({learning_terms}.+{use_terms}.+{fast_terms})'},
+        # {'type': 'learning skill 12', 'pattern':fr'({question_terms}.+{have_terms}.+{ease_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 13', 'pattern':fr'({guide_terms}.+{ease_terms}.+{performance_terms}.+{fast_terms})'},
+        # {'type': 'learning skill 14', 'pattern':fr'({learning_terms}.+{ease_terms}.+{use_terms})'},
+        # {'type': 'learning skill 15', 'pattern':fr'({minimal_terms}.+{design_terms}.+{ease_terms})'},
+        # {'type': 'learning skill 16', 'pattern':fr'({setting_terms}.+{restore_terms}.+{wrong_terms}.+({prevention_terms}|{use_terms}))'},
+        # {'type': 'learning skill 17', 'pattern':fr'({ease_terms}.+({learning_terms}|آشنا).+{use_terms})'},
+        # {'type': 'learning skill 18', 'pattern':fr'({task_terms}.+{suggestion_terms}.+{ease_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 19', 'pattern':fr'({guide_terms}.+{ease_terms}.+{learning_terms})'},
+        # {'type': 'leafning skill 20', 'pattern':fr'({ease_terms}.+{order_terms}.+{setting_terms}.+{ease_terms})'},
+        # {'type': 'learning skill 21', 'pattern':fr'({change_terms}.+{preview_terms}.+{right_terms}.+{ease_terms})'},
+        # {'type': 'learning skill 22', 'pattern':fr'({save_terms}.+{able_terms}.+{again_terms}.+{continue_terms})'},#error
+        # {'type': 'learning skill 23', 'pattern':fr'({guide_terms}.+{ease_terms}.+{use_terms}.+{compensation_terms})'},
+        # {'type': 'learning skill 24', 'pattern':fr'({training_terms}.+{learning_terms}.+{progress_terms})'},
+        # {'type': 'learning skill 25', 'pattern':fr'({guide_terms}.+{save_terms}.+{previous_terms}.+{review_terms})'},
+        # {'type': 'learning skill 26', 'pattern':fr'({training_terms}.+{path_terms}.+{ease_terms}.+{continue_terms})'},
+        # {'type': 'learning skill 27', 'pattern':fr'({previous_terms}.+{event_terms}.+{access_terms}.+({review_terms}|{follow_terms}))'},
+        # {'type': 'learning skill 28', 'pattern':fr'({update_terms}.+({describe_terms}|{guide_terms}).+{ease_terms}.+{learning_terms}.+{use_terms})'},
+        # {'type': 'learning skill 29', 'pattern':fr'({training_terms}.+{reference_terms}.+{ease_terms}?.+{learning_terms})'},
+        # {'type': 'learning skill 30', 'pattern':fr'({learning_terms}.+{save_terms}.+{progress_terms}.+{ease_terms}.+{again_terms})'},
+        # {'type': 'learning skill 31', 'pattern':fr'({reference_terms}?.+{training_terms}.+{access_terms}.+({guide_terms}|{describe_terms}).+{ease_terms})'},
+        # {'type': 'learning skill 32', 'pattern':fr'(({learning_terms}|{training_terms}).+{presentation_terms}.+{learning_terms}.+{use_terms})'},
+        # {'type': 'learning skill 33', 'pattern':fr'({training_terms}.+{reference_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 34', 'pattern':fr'({guide_terms}.+{task_terms}.+{able_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 35', 'pattern':fr'({guide_terms}.+{learning_terms}.+{task_terms})'},
+        # {'type': 'learning skill 36', 'pattern':fr'({ui_terms}.+{clear_terms}.+{ease_terms}.+{training_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 37', 'pattern':fr'({customize_terms}.+{setting_terms}.+{ease_terms}.+({task_terms}|{access_terms}))'},
+        # {'type': 'learning skill 38', 'pattern':fr'({update_terms}.+({learning_terms}|{training_terms}).+{update_terms}.+{change_terms}.+{learning_terms})'},
+        # {'type': 'learning skill 39', 'pattern':fr'({training_terms}.+{identification_terms}.+({guide_terms}|{describe_terms}).+{ease_terms}.+{use_terms})'},
+
+        #efficiency
+        {'type': 'efficiency skill 00', 'pattern':fr'({able_terms}.+{ease_terms}?.+{product_terms}.+{buy_terms}.+{issue_terms}.+{time_terms}.+{search_terms}.+{long_terms})'},
+        {'type': 'efficiency skill 01', 'pattern':fr'({able_terms}.+{ease_terms}?.+{product_terms}.+{Feature_terms}.+{search_terms})'},
+        {'type': 'efficiency skill 02', 'pattern':fr'({address_terms}.+{delivery_terms}.+{ease_terms}.+{add_terms}.+{order_terms})'},
+        {'type': 'efficiency skill 03', 'pattern':fr'({able_terms}.+{product_terms}.+{Feature_terms}.+{grading_terms}.+{ease_terms})'},
+        {'type': 'efficiency skill 04', 'pattern':fr'({able_terms}.+{status_terms}.+{order_terms}.+{follow_terms}.+{time_terms}.+{delivery_terms})'},
+        {'type': 'efficiency skill 05', 'pattern':fr'({able_terms}.+{product_terms}.+{future_terms}.+{save_terms}.+{ease_terms})'},
+        {'type': 'efficiency skill 06', 'pattern':fr'({subscription_terms}.+{able_terms}.+{discount_terms}.+{learning_terms})'},
+        {'type': 'efficiency skill 07', 'pattern':fr'({language_terms}.+{site_terms}.+{able_terms}.+{content_terms}.+{study_terms})'},
+        {'type': 'efficiency skill 08', 'pattern':fr'({able_terms}.+{account_terms}.+{access_terms}.+{ease_terms})'},
+        {'type': 'efficiency skill 09', 'pattern':fr'({able_terms}.+{code_terms}.+{discount_terms}.+{buy_terms})'},
+        {'type': 'efficiency skill 10', 'pattern':fr'({able_terms}.+{detail_terms}.+{product_terms}.+{observe_terms}.+{decision_terms})'},
+        {'type': 'efficiency skill 11', 'pattern':fr'({able_terms}.+{experience_terms}.+{subscription_terms}.+{update_terms}?)'},
+        
+
+
+
 
     ]
     for p in pattern:
