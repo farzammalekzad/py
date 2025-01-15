@@ -225,8 +225,10 @@ def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 #start of phase 3
 def userstory_nonfunctional(lemma_userstory: str) -> list:
     arr = []
+    want_terms = r'(خواست#خواه)'
+    able_terms = r'(توانست#توان)'
     training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
-    task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها)'
+    task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها|عملیات|عملیات‌ها)'
     learning_terms = r'(یادگیری|گیر|گرفت|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط|آگاه)'
     use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن)'
     feedback_terms = r'(فیدبک|بازخورد|نظر|بازخوردهای کاربران|انتقاد سازنده|پاسخ)'
@@ -245,7 +247,6 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     change_terms = r'(تغییر|تغییرات|اصلاح|بازنگری|دگرگونی)'
     preview_terms = r'(پیش نمایش|پیش‌نمایش)'
     accuracy_terms = r'(صحت|درستی|صحیح|درست|بی‌خطا|بی‌نقص)'
-    able_terms = r'(توانست|توان)'
     again_terms = r'(مجدد|بازگشت|برگردم|دوباره|از نو|تکرار)'
     continue_terms = r'(ادامه|پیشبرد|دنبال کردن|ادامه دادن|پیش‌روی)'
     previous_terms = r'(قبلی|گذشته|فعالیت‌های قبلی|پیشین|سوابق قبلی|کارهای گذشته)'
@@ -274,7 +275,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     customize_terms = r'(سفارشی‌سازی|سفارشی|سفارشی‌کردن|شخصی‌سازی)'
     need_terms = r'(نیاز|نیازمندی|نیازها|نیازمندی‌ها|نیازهای)'
     identification_terms = r'(شناسایی|شناساندن|شناسایی کردن|شناسایی‌کردن)'
-    product_terms = r'(محصول|محصولات|محصولات نرم‌افزاری|محصول نرم‌افزاری)'
+    product_terms = r'(محصول|محصولات|محصولات نرم‌افزاری|محصول نرم‌افزاری|کالا|کالاها)'
     buy_terms = r'(خرید|خریداری|خرید کردن|خریداری کردن)'
     time_terms = r'(زمان|زمان‌بندی|زمان‌برنامه‌ریزی|زمان‌بندی‌کردن|وقت)'
     long_terms = r'(طولانی|طولانی‌مدت|طولانی‌مدتی|بلند|بلندمدت|بلند‌مدت)'
@@ -284,22 +285,37 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     receive_terms = r'(دریافت|دریافت کردن|دریافت نمودن|دریافت‌کردن)'
     delivery_terms = r'(تحویل|تحویل دادن|تحویل نمودن|تحویل‌دادن)'
     add_terms= r'(اضافه|اضافه کردن|افزودن|افزودن به|اضافه نمودن)'
-    grading_terms= r'(رتبه|رتبه‌بندی|اولویت|اولویت‌بندی)'
+    grading_terms= r'(رتبه|رتبه‌بندی|اولویت|اولویت‌بندی|مرتب|مرتب کردن)'
     status_terms= r'(وضعیت|وضعیت‌ها|وضعیت‌های|وضعیت‌های نرم‌افزار|وضعیت نرم‌افزار)'
     future_terms= r'(آینده|آینده‌نگری|آینده‌نگری کردن|آینده‌نگری‌کردن)'
     subscription_terms= r'(اشتراک|اشتراک‌ گذارد|اشتراک‌گذاری|اشتراک‌گذاری‌کردن)'
     discount_terms= r'(تخفیف|تخفیفات|تخفیف‌ها|تخفیف‌های|تخفیف‌های ویژه)'
     language_terms= r'(زبان|زبان‌ها|زبان‌های|زبان‌های برنامه‌نویسی|زبان برنامه‌نویسی)'
     site_terms= r'(سایت|سایت‌ها|سایت‌های|سایت‌های اینترنتی|سایت اینترنتی)'
-    content_terms= r'(محتوا|محتوای|محتوای سایت|محتوای وب|محتوای وب‌سایت)'
+    content_terms= r'(محتوا|محتوای|محتوای سایت|محتوای وب|محتوای وب‌سایت|مفهوم)'
     study_terms= r'(مطالعه|مطالعه کردن|مطالعه‌کردن|خواندن|خواندن مطالب|خواندن مطالب)'
     account_terms= r'(حساب|حساب‌ها|حساب‌های|حساب‌های کاربری|حساب کاربری| حساب‌های اجتماعی| حساب اجتماعی)'
     code_terms= r'(کد|کد تخفیف|کد تخفیفی|کد تخفیف‌ها|کد تخفیف‌های|کد تخفیف‌های ویژه)'
     observe_terms= r'(مشاهده|مشاهده کردن|مشاهده‌کردن|نگاه کردن|نگاه‌کردن)'
     detail_terms= r'(جزئیات|جزئیات بیشتر|جزئیات بیشتری|جزئیات بیشتری|جزئیات بیشتری)'
-    decision_terms= r'(تصمیم|تصمیم‌گیری|تصمیم‌گیری کردن|تصمیم‌گیری‌کردن)'
+    decision_terms= r'(تصمیم|تصمیم‌گیری|تصمیم‌گیری کردن|تصمیم‌گیری‌کردن|انتخاب)'
     experience_terms= r'(تجربه|تجربه‌ها|تجربه‌های|تجربه‌های کاربری|تجربه کاربری|تجربیات)'
-
+    filter_terms= r'(فیلتر|فیلتر کردن|فیلتر‌کردن|پالایش|پالایش کردن|پالایش‌کردن)'
+    size_terms= r'(اندازه|اندازه‌ها|اندازه‌های|اندازه‌های مختلف|اندازه مختلف|سایز)'
+    read_terms= r'(خواندن|خواندن مطالب|خواندن مطالب|مطالعه|مطالعه کردن)'
+    notification_terms= r'(اطلاعیه|اطلاعیه‌ها|اطلاعیه‌های|اطلاعیه‌های جدید|اطلاعیه جدید|اعلان|اعلان‌ها|اعلان‌های|اعلان‌های جدید|اعلان جدید|هشدار)'
+    based_terms = r'(پایه|اساس|مبنا|بنیاد|بنیادی|اساسی|مبنایی)'
+    inventory_terms = r'(انبار|انبارها|انبارهای|انبارهای موجود|انبار موجود|موجودی)'
+    shopping_cart_terms = r'(سبد خرید|سبد خریدها|سبد خریدهای|سبد خریدهای موجود|سبد خرید موجود|سبد خریدهای موجود)'
+    invoice_terms = r'(فاکتور|فاکتورها|فاکتورهای|فاکتورهای موجود|فاکتور موجود|فاکتورهای موجود)'
+    submit_terms = r'(ارسال|ارسال کردن|ارسال‌کردن|ارسال نمودن|ارسال‌نمودن)'
+    legal_terms = r'(قانونی|قوانین|حقوقی|مقررات)'
+    favourite_terms = r'(مورد علاقه|مورد علاقه‌ها|مورد علاقه‌های|مورد علاقه‌های کاربری|مورد علاقه کاربری|مورد علاقه‌های کاربری|علاقه‌مندی|علاقه مندی)'
+    result_terms= r'(نتیجه|نتایج|نتیجه‌ها|نتایج|نتیجه‌های|نتایج|نتیجه‌های موجود|نتایج موجود)'
+    confident_terms= r'(اطمینان)'
+    find_terms = r'(یافتن|یافتن محصول|یافتن محصولات|یافتن محصولات|پیدا کردن|پیداکردن)'
+    simple_terms= r'(ساده|ساده‌تر|ساده‌ترین|بسیار ساده|بسیار ساده‌تر|بسیار ساده‌ترین)'
+    terminate_terms= r'(پایان|پایان دادن|لغو|لغو کردن|پایان دادن به|پایان دادن به|)'
 
 
 
@@ -342,6 +358,9 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
         # {'type': 'learning skill 37', 'pattern':fr'({customize_terms}.+{setting_terms}.+{ease_terms}.+({task_terms}|{access_terms}))'},
         # {'type': 'learning skill 38', 'pattern':fr'({update_terms}.+({learning_terms}|{training_terms}).+{update_terms}.+{change_terms}.+{learning_terms})'},
         # {'type': 'learning skill 39', 'pattern':fr'({training_terms}.+{identification_terms}.+({guide_terms}|{describe_terms}).+{ease_terms}.+{use_terms})'},
+        # {'type': 'learning skill 40', 'pattern':fr'({guide_terms}.+{product_terms}.+{able_terms}.+{right_terms}.+{use_terms})'},
+         {'type': 'learning skill 41', 'pattern':fr'({want_terms}.+{change_terms}.+{terminate_terms}.+{able_terms}.+{wrong_terms}.+{learning_terms})'},
+         {'type': 'learning skill 42', 'pattern':fr'({want_terms}.+{ui_terms}.+{clear_terms}.+{able_terms}.+{search_terms}.+{Feature_terms}.+{learning_terms})'},
 
         #efficiency
         {'type': 'efficiency skill 00', 'pattern':fr'({able_terms}.+{ease_terms}?.+{product_terms}.+{buy_terms}.+{issue_terms}.+{time_terms}.+{search_terms}.+{long_terms})'},
@@ -356,6 +375,40 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
         {'type': 'efficiency skill 09', 'pattern':fr'({able_terms}.+{code_terms}.+{discount_terms}.+{buy_terms})'},
         {'type': 'efficiency skill 10', 'pattern':fr'({able_terms}.+{detail_terms}.+{product_terms}.+{observe_terms}.+{decision_terms})'},
         {'type': 'efficiency skill 11', 'pattern':fr'({able_terms}.+{experience_terms}.+{subscription_terms}.+{update_terms}?)'},
+        {'type': 'efficiency skill 12', 'pattern':fr'({search_terms}.+{filter_terms}.+{product_terms})'},
+        {'type': 'efficiency skill 13', 'pattern':fr'({size_terms}.+{product_terms}.+{fast_terms}.+{decision_terms}.+{buy_terms})'},
+        {'type': 'efficiency skill 14', 'pattern':fr'({fast_terms}.+{guide_terms}.+{product_terms}.+{read_terms}.+{use_terms})'},
+        {'type': 'efficiency skill 15', 'pattern':fr'({notification_terms}.+{status_terms}.+{order_terms}.+{learning_terms})'},
+        {'type': 'efficiency skill 16', 'pattern':fr'({search_terms}.+{based_terms}.+{grading_terms}.+{able_terms}.+{product_terms})'},
+        {'type': 'efficiency skill 17', 'pattern':fr'({product_terms}.+{based_terms}.+{observe_terms}.+{ease_terms})'},
+        {'type': 'efficiency skill 18', 'pattern':fr'({code_terms}.+{discount_terms}.+{buy_terms}.+{discount_terms})'},
+        {'type': 'efficiency skill 19', 'pattern':fr'({inventory_terms}.+{shopping_cart_terms}.+{time_terms}.+{observe_terms}.+{product_terms})'},
+        {'type': 'efficiency skill 20', 'pattern':fr'({want_terms}.+{invoice_terms}.+{buy_terms}.+{observe_terms}.+{able_terms}.+{detail_terms}.+{buy_terms})'},
+        {'type': 'efficiency skill 21', 'pattern':fr'({want_terms}.+({experience_terms}|{suggestion_terms}).+{buy_terms}.+{subscription_terms}.+{able_terms}.+{learning_terms})'},
+        {'type': 'efficiency skill 22', 'pattern':fr'({want_terms}.+({experience_terms}|{suggestion_terms}).+{able_terms}.+{experience_terms}.+{subscription_terms})'},
+        {'type': 'efficiency skill 23', 'pattern':fr'({want_terms}.+{submit_terms}.+{decision_terms}.+{able_terms}.+{product_terms}.+{time_terms}.+{receive_terms})'},
+        {'type': 'efficiency skill 24', 'pattern':fr'({want_terms}.+{legal_terms}.+{fast_terms}.+{observe_terms}.+{able_terms}.+({legal_terms}|{task_terms}).+{learning_terms})'},
+        {'type': 'efficiency skill 25', 'pattern':fr'({want_terms}.+{product_terms}.+{favourite_terms}.+{able_terms}.+{ease_terms}.+({buy_terms}|{access_terms}))'},
+        {'type': 'efficiency skill 26', 'pattern':fr'({want_terms}.+{notification_terms}.+{product_terms}.+{able_terms}.+{discount_terms}.+{buy_terms})'},
+        {'type': 'efficiency skill 27', 'pattern':fr'({want_terms}.+{product_terms}.+{based_terms}.+{search_terms}.+{able_terms}.+{product_terms}.+{ease_terms}.+{find_terms})'},
+        {'type': 'efficiency skill 28', 'pattern':fr'({want_terms}.+{content_terms}.+{clear_terms}.+{able_terms}.+{ease_terms}.+{use_terms})'},
+        {'type': 'efficiency skill 29', 'pattern':fr'({want_terms}.+{fast_terms}.+{access_terms}.+{able_terms}.+{time_terms}.+{access_terms})'},
+        {'type': 'efficiency skill 30', 'pattern':fr'({want_terms}.+{product_terms}.+{based_terms}.+{search_terms}.+{able_terms}.+{product_terms}.+{ease_terms})'},
+        {'type': 'efficiency skill 31', 'pattern':fr'({want_terms}.+{content_terms}.+{clear_terms}.+{able_terms}.+{ease_terms}.+{use_terms})'},
+        {'type': 'efficiency skill 32', 'pattern':fr'({want_terms}.+{preview_terms}.+{Feature_terms}.+{able_terms}.+{result_terms}.+{confident_terms})'},
+        {'type': 'efficiency skill 33', 'pattern':fr'({want_terms}.+{ui_terms}.+({clear_terms}|{simple_terms}).+{able_terms}.+{ease_terms}.+{task_terms})'},
+        {'type': 'efficiency skill 34', 'pattern':fr'({want_terms}.+({search_terms}|{filter_terms}).+{able_terms}.+{result_terms}.+{ease_terms}.+{find_terms})'},
+        {'type': 'efficiency skill 35', 'pattern':fr'({want_terms}.+{change_terms}.+{terminate_terms}.+{able_terms}.+{wrong_terms}.+{learning_terms})'},
+        {'type': 'efficiency skill 36', 'pattern':fr'({want_terms}.+{task_terms}.+{observe_terms}.+{able_terms}.+{ease_terms}.+{again_terms})'},
+
+
+        
+
+        
+
+
+        
+
         
 
 
