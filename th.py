@@ -8,7 +8,7 @@ import time
 
 
 #df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/data.csv') 
-#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/sample.csv') 
+#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/sample2.csv') 
 df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/final.csv') 
 
 
@@ -316,6 +316,11 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     find_terms = r'(یافتن|یافتن محصول|یافتن محصولات|یافتن محصولات|پیدا کردن|پیداکردن)'
     simple_terms= r'(ساده|ساده‌تر|ساده‌ترین|بسیار ساده|بسیار ساده‌تر|بسیار ساده‌ترین)'
     terminate_terms= r'(پایان|پایان دادن|لغو|لغو کردن|پایان دادن به|پایان دادن به|)'
+    Simultaneously_terms= r'(همزمان)'
+    automated_terms= r'(خودکار|خودکارسازی|خودکارسازی شده|خودکارسازی‌شده)'
+    satisfaction_terms= r'(رضایت|رضایت‌بخشی|رضایت‌بخش|رضایت‌بخشی|رضایت‌بخش)'
+    notuseability_terms= r'(سرعت بارگذاری|زمان پاسخ‌دهی|عملکرد بهینه|منابع سیستم|داده امن|حریم خصوصی|رمزنگاری|محرمانگی|پایداری سیستم|اطلاعات دست رفت|عملکرد پایدار|بازیابی خطا|کاربر نیاز|صفحه‌خوان|چندزبانگی)'
+
 
 
 
@@ -400,6 +405,19 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
         {'type': 'efficiency skill 34', 'pattern':fr'({want_terms}.+({search_terms}|{filter_terms}).+{able_terms}.+{result_terms}.+{ease_terms}.+{find_terms})'},
         {'type': 'efficiency skill 35', 'pattern':fr'({want_terms}.+{change_terms}.+{terminate_terms}.+{able_terms}.+{wrong_terms}.+{learning_terms})'},
         {'type': 'efficiency skill 36', 'pattern':fr'({want_terms}.+{task_terms}.+{observe_terms}.+{able_terms}.+{ease_terms}.+{again_terms})'},
+        {'type': 'efficiency skill 37', 'pattern':fr'({want_terms}.+{task_terms}.+{Simultaneously_terms}.+{able_terms}.+(({fast_terms}.+{time_terms})|({time_terms}.+{fast_terms})))'},
+        {'type': 'efficiency skill 38', 'pattern':fr'({want_terms}.+{task_terms}.+{observe_terms}.+{able_terms}.+{ease_terms}.+{again_terms})'},
+
+
+        #useability 
+        {'type': 'useability', 'pattern':fr'({able_terms}.+({ease_terms}|{fast_terms}|{clear_terms}|{automated_terms}|{simple_terms}|{time_terms}|{learning_terms}))'},
+
+
+        #not useability
+        {'type': 'not useability', 'pattern':fr'({notuseability_terms})'},
+
+        
+
 
 
         
@@ -426,6 +444,16 @@ def userstory_nonfunctional_identification(df: pd.DataFrame):
     df.loc[:,'nonfunctional_userstory'] = df['string_lemmatized_userstory'].apply(userstory_nonfunctional)
     df.to_csv(output_file, index=False, encoding='utf-8-sig')
     print('All Nonfunctional user stories are extracted')
+
+
+#userstory checked with useability nonfunctional requirements
+
+def userstory_useability_check(df: pd.DataFrame):
+    output_file = "/Users/farrr/Desktop/Desktop/project/useability_userstory.csv"
+    df.loc[:,'useability_userstory'] = df['string_lemmatized_userstory'].apply(userstory_useability)
+    df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print('All Useability user stories are identified')
+   
 
 def test():
     userstory_nonfunctional_identification(df)
