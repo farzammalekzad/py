@@ -12,7 +12,7 @@ class regex(Enum):
     able_terms = r'(توانست#توان)'
     training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
     task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها|عملیات|عملیات‌ها)'
-    learning_terms = r'(یادگیری|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط|آگاه)'
+    learning_terms = r'(یادگیری|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط|آگاه|یاد گرفت)'
     use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن|انجام)'
     feedback_terms = r'(فیدبک|بازخورد|نظر|بازخوردهای کاربران|انتقاد سازنده|پاسخ)'
     clear_terms = r'(واضح|شفاف|روشن|بی‌ابهام|ساده|سرراست|گویا|بدون پیچیدگی)'
@@ -95,7 +95,7 @@ class regex(Enum):
     legal_terms = r'(قانونی|قوانین|حقوقی|مقررات)'
     favourite_terms = r'(مورد علاقه|مورد علاقه‌ها|مورد علاقه‌های|مورد علاقه‌های کاربری|مورد علاقه کاربری|مورد علاقه‌های کاربری|علاقه‌مندی|علاقه مندی)'
     result_terms= r'(نتیجه|نتایج|نتیجه‌ها|نتایج|نتیجه‌های|نتایج|نتیجه‌های موجود|نتایج موجود)'
-    confident_terms= r'(اطمینان)'
+    confident_terms= r'(اطمینان|مطمئن|مطمین)'
     find_terms = r'(یافتن|یافتن محصول|یافتن محصولات|یافتن محصولات|پیدا کردن|پیداکردن)'
     simple_terms= r'(ساده|ساده‌تر|ساده‌ترین|بسیار ساده|بسیار ساده‌تر|بسیار ساده‌ترین)'
     terminate_terms= r'(پایان|پایان دادن|لغو|لغو کردن|پایان دادن به|پایان دادن به|)'
@@ -108,7 +108,14 @@ class regex(Enum):
     efficienct_verbs= r'(کاهش|افزایش|بیشتر|کمتر)'
     default_terms= r'(پیش‌فرض|پیش‌فرض‌ها|پیش‌فرض‌های|پیش‌فرض‌های نرم‌افزار|پیش‌فرض نرم‌افزار|گزینه پیش‌فرض)'
     click_terms= r'(کلیک|کلیک کردن|کلیک‌کردن|کلیک نمودن|کلیک‌نمودن|دکمه|دکمه‌ها|دکمه‌های|دکمه‌های نرم‌افزار|دکمه نرم‌افزار)'
-    shortcut_terms= r'(میانبرهای نرم‌افزار|میانبر نرم‌افزار|میانبرهای نرم‌افزار|میانبر کیبورد|میانبر صفحه‌کلید)'
+    shortcut_terms= r'(میانبرهای نرم‌افزار|میانبر نرم‌افزار|میانبرهای نرم‌افزار|میانبر کیبورد|میانبر صفحه‌کلید|میانبر)'
+    recovery_terms= r'(بازیابی)'
+    reminder_terms= r'(یادآوری|یادآوری‌ها|یادآوری‌های|یادآوری‌های نرم‌افزار|یادآوری نرم‌افزار|یادآوری‌های نرم‌افزار|یادآوری)'
+    duplicate_terms= r'(تکرار|تکرار کردن|تکرار‌کردن|تکرار نمودن|تکرار‌نمودن|مجدد|دوباره)'
+    Forgetfulness_terms= r'(فراموشی|فراموشی‌ها|فراموشی‌های|فراموشی جلوگیری|فراموش)'
+    improve_terms= r'(بهبود|بهبودی|بهبودی‌ها|بهبودی‌های|بهبودی‌های نرم‌افزار|بهبود نرم‌افزار)'
+    timeoflearning_terms = r'(زمان آموزش|زمان آموزشی|زمان آموزش‌ها|زمان آموزش‌های|زمان آموزش‌های نرم‌افزار|زمان آموزش نرم‌افزار|زمان یادگیری)'
+    refer_terms= r'(مراجعه|مراجعه کردن|مراجعه‌کردن|مراجعه نمودن|مراجعه‌نمودن)'
     
 
 
@@ -202,6 +209,7 @@ def phase_two(df:pd.DataFrame)->pd.DataFrame:
     corrected_informal_df = informal_normalize_dataframe(df)
     normalized_dataframe = normalize_dataframe(corrected_informal_df)
     tokenized_df = tokenize_dataframe(normalized_dataframe)
+    #در این قسمت کلمات توقف از برنامه حذف می‌شوند تا بتوان بدون این بخش متن‌ها را بررسی کرد برای این کار کد زیر دور زده می‌شود
     stopwords_df = stopwords_dataframe(tokenized_df)
     lemma_df = lemmatizer_dataframe(stopwords_df)
     #lemma_df.to_csv(output_file, index=False, encoding='utf-8-sig')
@@ -333,7 +341,7 @@ def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 #start of phase 3
 def userstory_nonfunctional(lemma_userstory: str) -> list:
     arr = []
-    matched = False
+    matched = True
     want_terms = r'(خواست#خواه)'
     able_terms = r'(توانست#توان)'
     training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
@@ -434,111 +442,142 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
 
 
 
-    learning_pattern = [
-          {'type': 'learning skill 00', 'pattern':fr'{training_terms}.+{learning_terms}.+{use_terms}'},
-          {'type': 'learning skill 02', 'pattern':fr'{guide_terms}.+{access_terms}.+{learning_terms}.+{use_terms}'},
-          {'type': 'learning skill 03', 'pattern':fr'{clear_terms}.+{regex.ease_terms}.+{fast_terms}.+{learning_terms}'},
-          {'type': 'learning skill 04', 'pattern':fr'({fast_terms}.+{learning_terms}.+{use_terms})'},
-          {'type': 'learning skill 05', 'pattern':fr'({issue_terms}.+{question_terms}.+{help_terms}.+{regex.ease_terms})'},
-          {'type': 'learning skill 06', 'pattern':fr'({describe_terms}.+{task_terms}.+{learning_terms})'},
-          {'type': 'learning skill 07', 'pattern':fr'({training_terms}.+{regex.ease_terms}.+{learning_terms})'},
-          {'type': 'learning skill 08', 'pattern':fr'({feedback_terms}.+{learning_terms})'},
-          {'type': 'learning skill 09', 'pattern':fr'({performance_terms}.+{learning_terms}.+{use_terms})'},
-          {'type': 'learning skill 11', 'pattern':fr'({learning_terms}.+{use_terms}.+{fast_terms})'},
-          {'type': 'learning skill 12', 'pattern':fr'({question_terms}.+{have_terms}.+{regex.ease_terms}.+{learning_terms})'},
-          {'type': 'learning skill 13', 'pattern':fr'({guide_terms}.+{regex.ease_terms}.+{performance_terms}.+{fast_terms})'},
-          {'type': 'learning skill 14', 'pattern':fr'({learning_terms}.+{regex.ease_terms}.+{use_terms})'},
-          {'type': 'learning skill 15', 'pattern':fr'({minimal_terms}.+{design_terms}.+{regex.ease_terms})'},
-          {'type': 'learning skill 16', 'pattern':fr'({setting_terms}.+{restore_terms}.+{wrong_terms}.+({prevention_terms}|{use_terms}))'},
-          {'type': 'learning skill 17', 'pattern':fr'({regex.ease_terms}.+({learning_terms}|آشنا).+{use_terms})'},
-          {'type': 'learning skill 18', 'pattern':fr'({task_terms}.+{suggestion_terms}.+{regex.ease_terms}.+{learning_terms})'},
-          {'type': 'learning skill 19', 'pattern':fr'({guide_terms}.+{regex.ease_terms}.+{learning_terms})'},
-          {'type': 'leafning skill 20', 'pattern':fr'({regex.ease_terms}.+{order_terms}.+{setting_terms}.+{regex.ease_terms})'},
-          {'type': 'learning skill 21', 'pattern':fr'({change_terms}.+{preview_terms}.+{right_terms}.+{regex.ease_terms})'},
-          {'type': 'learning skill 22', 'pattern':fr'({save_terms}.+{able_terms}.+{again_terms}.+{continue_terms})'},
-          {'type': 'learning skill 23', 'pattern':fr'({guide_terms}.+{regex.ease_terms.value}.+{use_terms}.+{compensation_terms})'},
-          {'type': 'learning skill 24', 'pattern':fr'({training_terms}.+{learning_terms}.+{progress_terms})'},
-          {'type': 'learning skill 25', 'pattern':fr'({guide_terms}.+{save_terms}.+{previous_terms}.+{review_terms})'},
-          {'type': 'learning skill 26', 'pattern':fr'({training_terms}.+{path_terms}.+{regex.ease_terms}.+{continue_terms})'},
-          {'type': 'learning skill 27', 'pattern':fr'({previous_terms}.+{event_terms}.+{access_terms}.+({review_terms}|{follow_terms}))'},
-          {'type': 'learning skill 28', 'pattern':fr'({update_terms}.+({describe_terms}|{guide_terms}).+{regex.ease_terms}.+{learning_terms}.+{use_terms})'},
-          {'type': 'learning skill 29', 'pattern':fr'({training_terms}.+{reference_terms}.+{regex.ease_terms}?.+{learning_terms})'},
-          {'type': 'learning skill 30', 'pattern':fr'({learning_terms}.+{save_terms}.+{progress_terms}.+{regex.ease_terms}.+{again_terms})'},
-          {'type': 'learning skill 31', 'pattern':fr'({reference_terms}?.+{training_terms}.+{access_terms}.+({guide_terms}|{describe_terms}).+{regex.ease_terms})'},
-          {'type': 'learning skill 32', 'pattern':fr'(({learning_terms}|{training_terms}).+{presentation_terms}.+{learning_terms}.+{use_terms})'},
-          {'type': 'learning skill 33', 'pattern':fr'({training_terms}.+{reference_terms}.+{learning_terms})'},
-          {'type': 'learning skill 34', 'pattern':fr'({guide_terms}.+{task_terms}.+{able_terms}.+{learning_terms})'},
-          {'type': 'learning skill 35', 'pattern':fr'({guide_terms}.+{learning_terms}.+{task_terms})'},
-          {'type': 'learning skill 36', 'pattern':fr'({ui_terms}.+{clear_terms}.+{regex.ease_terms}.+{training_terms}.+{learning_terms})'},
-          {'type': 'learning skill 37', 'pattern':fr'({customize_terms}.+{setting_terms}.+{regex.ease_terms}.+({task_terms}|{access_terms}))'},
-          {'type': 'learning skill 38', 'pattern':fr'({update_terms}.+({learning_terms}|{training_terms}).+{update_terms}.+{change_terms}.+{learning_terms})'},
-          {'type': 'learning skill 39', 'pattern':fr'({training_terms}.+{identification_terms}.+({guide_terms}|{describe_terms}).+{regex.ease_terms}.+{use_terms})'},
-          {'type': 'learning skill 40', 'pattern':fr'({guide_terms}.+{product_terms}.+{able_terms}.+{right_terms}.+{use_terms})'},
-          {'type': 'learning skill 41', 'pattern':fr'({regex.want_terms.value}.+{regex.change_terms.value}.+{regex.terminate_terms.value}.+{regex.able_terms.value}.+{wrong_terms}.+{learning_terms})'},
-          {'type': 'learning skill 42', 'pattern':fr'({want_terms}.+{ui_terms}.+{clear_terms}.+{regex.able_terms.value}.+{search_terms}.+{Feature_terms}.+{learning_terms})'},
-          {'type': 'learning skill 43', 'pattern':fr'({regex.able_terms.value}.+({regex.guide_terms.value}|{regex.training_terms.value}|{regex.learning_terms.value}))'},
-          {'type': 'learning skill 44', 'pattern':fr'({regex.want_terms.value}.+({regex.guide_terms.value}|{regex.learning_terms.value}|{regex.training_terms.value}).+{regex.able_terms.value}.+{regex.ease_terms.value}(.+{regex.use_terms.value}?))'},
+    learnability_pattern = [
+          {'type': 'learnability 00', 'pattern':fr'{training_terms}.+{learning_terms}.+{use_terms}'},
+          {'type': 'learnability 02', 'pattern':fr'{guide_terms}.+{access_terms}.+{learning_terms}.+{use_terms}'},
+          {'type': 'learnability 03', 'pattern':fr'{clear_terms}.+{regex.ease_terms}.+{fast_terms}.+{learning_terms}'},
+          {'type': 'learnability 04', 'pattern':fr'({fast_terms}.+{learning_terms}.+{use_terms})'},
+          {'type': 'learnability 05', 'pattern':fr'({issue_terms}.+{question_terms}.+{help_terms}.+{regex.ease_terms})'},
+          {'type': 'learnability 06', 'pattern':fr'({describe_terms}.+{task_terms}.+{learning_terms})'},
+          {'type': 'learnability 07', 'pattern':fr'({training_terms}.+{regex.ease_terms}.+{learning_terms})'},
+          {'type': 'learnability 08', 'pattern':fr'({feedback_terms}.+{learning_terms})'},
+          {'type': 'learnability 09', 'pattern':fr'({performance_terms}.+{learning_terms}.+{use_terms})'},
+          {'type': 'learnability 11', 'pattern':fr'({learning_terms}.+{use_terms}.+{fast_terms})'},
+          {'type': 'learnability 12', 'pattern':fr'({question_terms}.+{have_terms}.+{regex.ease_terms}.+{learning_terms})'},
+          {'type': 'learnability 13', 'pattern':fr'({guide_terms}.+{regex.ease_terms}.+{performance_terms}.+{fast_terms})'},
+          {'type': 'learnability 14', 'pattern':fr'({learning_terms}.+{regex.ease_terms}.+{use_terms})'},
+          {'type': 'learnability 15', 'pattern':fr'({minimal_terms}.+{design_terms}.+{regex.ease_terms})'},
+          {'type': 'learnability 16', 'pattern':fr'({setting_terms}.+{restore_terms}.+{wrong_terms}.+({prevention_terms}|{use_terms}))'},
+          {'type': 'learnability 17', 'pattern':fr'({regex.ease_terms}.+({learning_terms}|آشنا).+{use_terms})'},
+          {'type': 'learnability 18', 'pattern':fr'({task_terms}.+{suggestion_terms}.+{regex.ease_terms}.+{learning_terms})'},
+          {'type': 'learnability 19', 'pattern':fr'({guide_terms}.+{regex.ease_terms}.+{learning_terms})'},
+          {'type': 'learnability 20', 'pattern':fr'({regex.ease_terms}.+{order_terms}.+{setting_terms}.+{regex.ease_terms})'},
+          {'type': 'learnability 21', 'pattern':fr'({change_terms}.+{preview_terms}.+{right_terms}.+{regex.ease_terms})'},
+          {'type': 'learnability 22', 'pattern':fr'({save_terms}.+{able_terms}.+{again_terms}.+{continue_terms})'},
+          {'type': 'learnability 23', 'pattern':fr'({guide_terms}.+{regex.ease_terms.value}.+{use_terms}.+{compensation_terms})'},
+          {'type': 'learnability 24', 'pattern':fr'({training_terms}.+{learning_terms}.+{progress_terms})'},
+          {'type': 'learnability 25', 'pattern':fr'({guide_terms}.+{save_terms}.+{previous_terms}.+{review_terms})'},
+          {'type': 'learnability 26', 'pattern':fr'({training_terms}.+{path_terms}.+{regex.ease_terms}.+{continue_terms})'},
+          {'type': 'learnability 27', 'pattern':fr'({previous_terms}.+{event_terms}.+{access_terms}.+({review_terms}|{follow_terms}))'},
+          {'type': 'learnability 28', 'pattern':fr'({update_terms}.+({describe_terms}|{guide_terms}).+{regex.ease_terms}.+{learning_terms}.+{use_terms})'},
+          {'type': 'learnability 29', 'pattern':fr'({training_terms}.+{reference_terms}.+{regex.ease_terms}?.+{learning_terms})'},
+          {'type': 'learnability 30', 'pattern':fr'({learning_terms}.+{save_terms}.+{progress_terms}.+{regex.ease_terms}.+{again_terms})'},
+          {'type': 'learnability 31', 'pattern':fr'({reference_terms}?.+{training_terms}.+{access_terms}.+({guide_terms}|{describe_terms}).+{regex.ease_terms})'},
+          {'type': 'learnability 32', 'pattern':fr'(({learning_terms}|{training_terms}).+{presentation_terms}.+{learning_terms}.+{use_terms})'},
+          {'type': 'learnability 33', 'pattern':fr'({training_terms}.+{reference_terms}.+{learning_terms})'},
+          {'type': 'learnability 34', 'pattern':fr'({guide_terms}.+{task_terms}.+{able_terms}.+{learning_terms})'},
+          {'type': 'learnability 35', 'pattern':fr'({guide_terms}.+{learning_terms}.+{task_terms})'},
+          {'type': 'learnability 36', 'pattern':fr'({ui_terms}.+{clear_terms}.+{regex.ease_terms}.+{training_terms}.+{learning_terms})'},
+          {'type': 'learnability 37', 'pattern':fr'({customize_terms}.+{setting_terms}.+{regex.ease_terms}.+({task_terms}|{access_terms}))'},
+          {'type': 'learnability 38', 'pattern':fr'({update_terms}.+({learning_terms}|{training_terms}).+{update_terms}.+{change_terms}.+{learning_terms})'},
+          {'type': 'learnability 39', 'pattern':fr'({training_terms}.+{identification_terms}.+({guide_terms}|{describe_terms}).+{regex.ease_terms}.+{use_terms})'},
+          {'type': 'learnability 40', 'pattern':fr'({guide_terms}.+{product_terms}.+{able_terms}.+{right_terms}.+{use_terms})'},
+          {'type': 'learnability 41', 'pattern':fr'({regex.want_terms.value}.+{regex.change_terms.value}.+{regex.terminate_terms.value}.+{regex.able_terms.value}.+{wrong_terms}.+{learning_terms})'},
+          {'type': 'learnability 42', 'pattern':fr'({want_terms}.+{ui_terms}.+{clear_terms}.+{regex.able_terms.value}.+{search_terms}.+{Feature_terms}.+{learning_terms})'},
+          {'type': 'learnability 43', 'pattern':fr'({regex.able_terms.value}.+({regex.guide_terms.value}|{regex.training_terms.value}|{regex.learning_terms.value}))'},
+          {'type': 'learnability 44', 'pattern':fr'({regex.want_terms.value}.+({regex.guide_terms.value}|{regex.learning_terms.value}|{regex.training_terms.value}).+{regex.able_terms.value}.+{regex.ease_terms.value}(.+{regex.use_terms.value}?))'},
     ]
+
+    Memorability_pattern = [
+        {'type': 'Memorability 00', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.task_terms.value}.+{regex.able_terms.value}.+{regex.ease_terms.value}.*({regex.recovery_terms.value}|{regex.reminder_terms.value}))'},
+        {'type': 'Memorability 01', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.task_terms.value}.+{regex.able_terms.value}.+{regex.ease_terms.value}.*{regex.access_terms.value}.+{regex.reminder_terms.value})'},
+        {'type': 'Memorability 02', 'pattern':fr'({regex.want_terms.value}.+{regex.progress_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.continue_terms.value})'},
+        {'type': 'Memorability 03', 'pattern':fr'({regex.want_terms.value}.+{regex.setting_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.need_terms.value}.+{regex.duplicate_terms.value})'},
+        {'type': 'Memorability 04', 'pattern':fr'({regex.want_terms.value}.+{regex.reminder_terms.value}.+{regex.use_terms.value}.+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}).+{regex.Forgetfulness_terms.value})'},
+        {'type': 'Memorability 05', 'pattern':fr'({regex.want_terms.value}.+{regex.Feature_terms.value}.+{regex.reminder_terms.value}.+{regex.able_terms.value}.+{regex.use_terms.value}.+{regex.Forgetfulness_terms.value})'},
+        #{'type': 'Memorability 06', 'pattern':fr'({regex.progress_terms.value}.+{regex.observe_terms.value}.+{regex.confident_terms.value}.+{regex.learning_terms.value})'},
+        {'type': 'Memorability 07', 'pattern':fr'({regex.want_terms.value}.+{regex.training_terms.value}.+{regex.update_terms.value}.+{regex.able_terms.value}.+{regex.learning_terms.value}.+{regex.improve_terms.value})'},
+        {'type': 'Memorability 08', 'pattern':fr'({regex.want_terms.value}.+{regex.shortcut_terms.value}.+{regex.fast_terms.value}.+{regex.able_terms.value}.+{regex.learning_terms.value}.+({regex.improve_terms.value}|{regex.efficienct_verbs.value}))'},
+        {'type': 'Memorability 09', 'pattern':fr'({regex.want_terms.value}.+{regex.training_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.previous_terms.value}.+{regex.review_terms.value})'},
+        {'type': 'Memorability 10', 'pattern':fr'({regex.want_terms.value}.+{regex.automated_terms.value}.*{regex.reminder_terms.value}.+{regex.able_terms.value}.+{regex.ease_terms.value}.*{regex.learning_terms.value})'},
+        {'type': 'Memorability 11', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.continue_terms.value})'},
+        {'type': 'Memorability 12', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.previous_terms.value}.+{regex.review_terms.value})'},
+        {'type': 'Memorability 13', 'pattern':fr'({regex.want_terms.value}.+{regex.search_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.access_terms.value}.+{regex.reminder_terms.value})'},
+        {'type': 'Memorability 14', 'pattern':fr'({regex.want_terms.value}.+(({regex.guide_terms.value}.+{regex.access_terms.value})|({regex.access_terms.value}.+{regex.guide_terms.value})).+{regex.able_terms.value}.+{regex.Forgetfulness_terms.value}.+{regex.learning_terms.value})'},
+        {'type': 'Memorability 15', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.able_terms.value}.+{regex.fast_terms.value}.+{regex.improve_terms.value})'},
+        {'type': 'Memorability 16', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+(({regex.setting_terms.value}.+?{regex.duplicate_terms.value})|{regex.setting_terms.value}).*{regex.ease_terms.value}.*{regex.use_terms.value})'},
+        {'type': 'Memorability 17', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}).+{regex.refer_terms.value})'},
+        {'type': 'Memorability 18', 'pattern':fr'({regex.want_terms.value}.+{regex.guide_terms.value}.+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}).+{regex.learning_terms.value}.+{regex.Forgetfulness_terms.value})'},
+      
+
+
+
     
-    efficiency_pattern = [
+
+    
+    ]
+
+    
+    
+    efficiencyuse_pattern = [
 
 
         #efficiency
-         {'type': 'efficiency skill 00', 'pattern':fr'({regex.able_terms.value}.+{regex.ease_terms.value}?.+{product_terms}.+{buy_terms}.+{issue_terms}.+{time_terms}.+{search_terms}.+{long_terms})'},
-         {'type': 'efficiency skill 01', 'pattern':fr'({regex.able_terms.value}.+{regex.ease_terms.value}?.+{product_terms}.+{Feature_terms}.+{search_terms})'},
-         {'type': 'efficiency skill 02', 'pattern':fr'({address_terms}.+{delivery_terms}.+{regex.ease_terms.value}.+{add_terms}.+{order_terms})'},
-         {'type': 'efficiency skill 03', 'pattern':fr'({regex.able_terms.value}.+{product_terms}.+{Feature_terms}.+{grading_terms}.+{regex.ease_terms.value})'},
-         {'type': 'efficiency skill 04', 'pattern':fr'({regex.able_terms.value}.+{status_terms}.+{order_terms}.+{follow_terms}.+{time_terms}.+{delivery_terms})'},
-         {'type': 'efficiency skill 05', 'pattern':fr'({regex.able_terms.value}.+{product_terms}.+{future_terms}.+{save_terms}.+{regex.ease_terms.value})'},
-         {'type': 'efficiency skill 06', 'pattern':fr'({subscription_terms}.+{regex.able_terms.value}.+{discount_terms}.+{learning_terms})'},
-         {'type': 'efficiency skill 07', 'pattern':fr'({regex.language_terms.value}.+{regex.site_terms.value}.+{regex.able_terms.value}.+(({regex.content_terms.value}.+{regex.study_terms.value})|({regex.experience_terms.value}.+{regex.customize_terms.value})|{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
-         {'type': 'efficiency skill 08', 'pattern':fr'({regex.able_terms.value}.+{account_terms}.+{access_terms}.+{regex.ease_terms.value})'},
-         {'type': 'efficiency skill 09', 'pattern':fr'({regex.able_terms.value}.+{code_terms}.+{discount_terms}.+{buy_terms})'},
-         {'type': 'efficiency skill 10', 'pattern':fr'({regex.able_terms.value}.+{detail_terms}.+{product_terms}.+{observe_terms}.+{decision_terms})'},
-         {'type': 'efficiency skill 11', 'pattern':fr'({regex.able_terms.value}.+{experience_terms}.+{subscription_terms}.+{update_terms}?)'},
-         {'type': 'efficiency skill 12', 'pattern':fr'({search_terms}.+{filter_terms}.+{product_terms})'},
-         {'type': 'efficiency skill 13', 'pattern':fr'({size_terms}.+{product_terms}.+{fast_terms}.+{decision_terms}.+{buy_terms})'},
-         {'type': 'efficiency skill 14', 'pattern':fr'({fast_terms}.+{guide_terms}.+{product_terms}.+{read_terms}.+{use_terms})'},
-         {'type': 'efficiency skill 15', 'pattern':fr'({notification_terms}.+{status_terms}.+{order_terms}.+{learning_terms})'},
-         {'type': 'efficiency skill 16', 'pattern':fr'({search_terms}.+{based_terms}.+{grading_terms}.+{regex.able_terms.value}.+{product_terms})'},
-         {'type': 'efficiency skill 17', 'pattern':fr'({product_terms}.+{based_terms}.+{observe_terms}.+{regex.ease_terms.value})'},
-         {'type': 'efficiency skill 18', 'pattern':fr'({code_terms}.+{discount_terms}.+{buy_terms}.+{discount_terms})'},
-         {'type': 'efficiency skill 19', 'pattern':fr'({inventory_terms}.+{shopping_cart_terms}.+{time_terms}.+{observe_terms}.+{product_terms})'},
-         {'type': 'efficiency skill 20', 'pattern':fr'({want_terms}.+{invoice_terms}.+{buy_terms}.+{observe_terms}.+{regex.able_terms.value}.+{detail_terms}.+{buy_terms})'},
-         {'type': 'efficiency skill 21', 'pattern':fr'({want_terms}.+({experience_terms}|{suggestion_terms}).+{buy_terms}.+{subscription_terms}.+{regex.able_terms.value}.+{learning_terms})'},
-         {'type': 'efficiency skill 22', 'pattern':fr'({want_terms}.+({experience_terms}|{suggestion_terms}).+{regex.able_terms.value}.+{experience_terms}.+{subscription_terms})'},
-         {'type': 'efficiency skill 23', 'pattern':fr'({want_terms}.+{submit_terms}.+{decision_terms}.+{regex.able_terms.value}.+{product_terms}.+{time_terms}.+{receive_terms})'},
-         {'type': 'efficiency skill 24', 'pattern':fr'({want_terms}.+{legal_terms}.+{fast_terms}.+{observe_terms}.+{regex.able_terms.value}.+({legal_terms}|{task_terms}).+{learning_terms})'},
-         {'type': 'efficiency skill 25', 'pattern':fr'({want_terms}.+{product_terms}.+{favourite_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+({buy_terms}|{access_terms}))'},
-         {'type': 'efficiency skill 26', 'pattern':fr'({want_terms}.+{notification_terms}.+{product_terms}.+{regex.able_terms.value}.+{discount_terms}.+{buy_terms})'},
-         {'type': 'efficiency skill 27', 'pattern':fr'({want_terms}.+{product_terms}.+{based_terms}.+{search_terms}.+{regex.able_terms.value}.+{product_terms}.+{regex.ease_terms.value}.+{find_terms})'},
-         {'type': 'efficiency skill 28', 'pattern':fr'({want_terms}.+{content_terms}.+{clear_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+{use_terms})'},
-         {'type': 'efficiency skill 29', 'pattern':fr'({want_terms}.+{fast_terms}.+{access_terms}.+{regex.able_terms.value}.+{time_terms}.+{access_terms})'},
-         {'type': 'efficiency skill 30', 'pattern':fr'({want_terms}.+{product_terms}.+{based_terms}.+{search_terms}.+{regex.able_terms.value}.+{product_terms}.+{regex.ease_terms.value})'},
-         {'type': 'efficiency skill 31', 'pattern':fr'({want_terms}.+{content_terms}.+{clear_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+{use_terms})'},
-         {'type': 'efficiency skill 32', 'pattern':fr'({want_terms}.+{preview_terms}.+{Feature_terms}.+{regex.able_terms.value}.+{result_terms}.+{confident_terms})'},
-         {'type': 'efficiency skill 33', 'pattern':fr'({want_terms}.+{ui_terms}.+({clear_terms}|{simple_terms}).+{regex.able_terms.value}.+{regex.ease_terms.value}.+{task_terms})'},
-         {'type': 'efficiency skill 34', 'pattern':fr'({want_terms}.+({search_terms}|{filter_terms}).+{regex.able_terms.value}.+{result_terms}.+{regex.ease_terms.value}.+{find_terms})'},
-         {'type': 'efficiency skill 35', 'pattern':fr'({want_terms}.+{change_terms}.+{terminate_terms}.+{regex.able_terms.value}.+{wrong_terms}.+{learning_terms})'},
-         {'type': 'efficiency skill 36', 'pattern':fr'({want_terms}.+{task_terms}.+{observe_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+{again_terms})'},
-         {'type': 'efficiency skill 37', 'pattern':fr'({want_terms}.+{task_terms}.+{Simultaneously_terms}.+{regex.able_terms.value}.+(({fast_terms}.+{time_terms})|({time_terms}.+{fast_terms})))'},
-        #{'type': 'efficiency skill 38', 'pattern':fr'({regex.able_terms.value}.+({regex.fast_terms}|{regex.efficiency_terms.value}).+({regex.use_terms.value}|{regex.efficienct_verbs.value}))'}, //bad pattern
-         {'type': 'efficiency skill 39', 'pattern':fr'({regex.want_terms.value}.+{regex.search_terms.value}.+{regex.fast_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-         {'type': 'efficiency skill 40', 'pattern':fr'({regex.want_terms.value}.+{regex.automated_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-         {'type': 'efficiency skill 41', 'pattern':fr'({regex.want_terms.value}.+{regex.task_terms.value}.+{regex.Simultaneously_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-         {'type': 'efficiency skill 42', 'pattern':fr'({regex.want_terms.value}.+{regex.search_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-        #{'type': 'efficiency skill 43', 'pattern':fr'({regex.want_terms.value}.+{regex.automated_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|{regex.time_terms.value}))'},//bad pattern
-         {'type': 'efficiency skill 44', 'pattern':fr'({regex.want_terms.value}.+{regex.default_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-        #{'type': 'efficiency skill 45', 'pattern':fr'({regex.able_terms.value}.+({regex.efficiency_terms.value}|{regex.time_terms.value}))'} //bad pattern
-         {'type': 'efficiency skill 46', 'pattern':fr'({regex.want_terms.value}.+{regex.click_terms.value}.+{regex.submit_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-         {'type': 'efficiency skill 47', 'pattern':fr'({regex.want_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
-         {'type': 'efficiency skill 48', 'pattern':fr'({regex.want_terms.value}.+{regex.shortcut_terms.value}.+{regex.able_terms.value}.+({regex.fast_terms.value}|({regex.time_terms.value}).+{regex.task_terms.value}.+{regex.efficienct_verbs.value}))'},
-         {'type': 'efficiency skill 49', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+({regex.previous_terms.value}|{regex.task_terms.value}).+{regex.observe_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|{regex.fast_terms.value}|({regex.ease_terms.value}.+{regex.access_terms.value})))'},
-         {'type': 'efficiency skill 50', 'pattern':fr'({regex.want_terms.value}.+{regex.filter_terms.value}.+{regex.have_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
-         {'type': 'efficiency skill 51', 'pattern':fr'({regex.able_terms.value}.+{regex.task_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
-         {'type': 'efficiency skill 52', 'pattern':fr'({regex.want_terms.value}.+(({regex.filter_terms.value}.+{regex.Feature_terms.value})|{regex.search_terms.value}).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|({regex.use_terms.value}|{regex.find_terms.value}))))'},
-         {'type': 'efficiency skill 53', 'pattern':fr'({regex.want_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms}).+{regex.able_terms.value}.+{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))'},
-         {'type': 'efficiency skill 54', 'pattern':fr'({regex.want_terms.value}.+(({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms})?!.*({regex.learning_terms.value}|{regex.training_terms.value}|{regex.guide_terms.value})).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))?!.*{regex.learning_terms.value})'},
+         {'type': 'efficiencyuse 00', 'pattern':fr'({regex.able_terms.value}.+{regex.ease_terms.value}?.+{product_terms}.+{buy_terms}.+{issue_terms}.+{time_terms}.+{search_terms}.+{long_terms})'},
+         {'type': 'efficiencyuse 01', 'pattern':fr'({regex.able_terms.value}.+{regex.ease_terms.value}?.+{product_terms}.+{Feature_terms}.+{search_terms})'},
+         {'type': 'efficiencyuse 02', 'pattern':fr'({address_terms}.+{delivery_terms}.+{regex.ease_terms.value}.+{add_terms}.+{order_terms})'},
+         {'type': 'efficiencyuse 03', 'pattern':fr'({regex.able_terms.value}.+{product_terms}.+{Feature_terms}.+{grading_terms}.+{regex.ease_terms.value})'},
+         {'type': 'efficiencyuse 04', 'pattern':fr'({regex.able_terms.value}.+{status_terms}.+{order_terms}.+{follow_terms}.+{time_terms}.+{delivery_terms})'},
+         {'type': 'efficiencyuse 05', 'pattern':fr'({regex.able_terms.value}.+{product_terms}.+{future_terms}.+{save_terms}.+{regex.ease_terms.value})'},
+         {'type': 'efficiencyuse 06', 'pattern':fr'({subscription_terms}.+{regex.able_terms.value}.+{discount_terms}.+{learning_terms})'},
+         {'type': 'efficiencyuse 07', 'pattern':fr'({regex.language_terms.value}.+{regex.site_terms.value}.+{regex.able_terms.value}.+(({regex.content_terms.value}.+{regex.study_terms.value})|({regex.experience_terms.value}.+{regex.customize_terms.value})|{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
+         {'type': 'efficiencyuse 08', 'pattern':fr'({regex.able_terms.value}.+{account_terms}.+{access_terms}.+{regex.ease_terms.value})'},
+         {'type': 'efficiencyuse 09', 'pattern':fr'({regex.able_terms.value}.+{code_terms}.+{discount_terms}.+{buy_terms})'},
+         {'type': 'efficiencyuse 10', 'pattern':fr'({regex.able_terms.value}.+{detail_terms}.+{product_terms}.+{observe_terms}.+{decision_terms})'},
+         {'type': 'efficiencyuse 11', 'pattern':fr'({regex.able_terms.value}.+{experience_terms}.+{subscription_terms}.+{update_terms}?)'},
+         {'type': 'efficiencyuse 12', 'pattern':fr'({search_terms}.+{filter_terms}.+{product_terms})'},
+         {'type': 'efficiencyuse 13', 'pattern':fr'({size_terms}.+{product_terms}.+{fast_terms}.+{decision_terms}.+{buy_terms})'},
+         {'type': 'efficiencyuse 14', 'pattern':fr'({fast_terms}.+{guide_terms}.+{product_terms}.+{read_terms}.+{use_terms})'},
+         {'type': 'efficiencyuse 15', 'pattern':fr'({notification_terms}.+{status_terms}.+{order_terms}.+{learning_terms})'},
+         {'type': 'efficiencyuse 16', 'pattern':fr'({search_terms}.+{based_terms}.+{grading_terms}.+{regex.able_terms.value}.+{product_terms})'},
+         {'type': 'efficiencyuse 17', 'pattern':fr'({product_terms}.+{based_terms}.+{observe_terms}.+{regex.ease_terms.value})'},
+         {'type': 'efficiencyuse 18', 'pattern':fr'({code_terms}.+{discount_terms}.+{buy_terms}.+{discount_terms})'},
+         {'type': 'efficiencyuse 19', 'pattern':fr'({inventory_terms}.+{shopping_cart_terms}.+{time_terms}.+{observe_terms}.+{product_terms})'},
+         {'type': 'efficiencyuse 20', 'pattern':fr'({want_terms}.+{invoice_terms}.+{buy_terms}.+{observe_terms}.+{regex.able_terms.value}.+{detail_terms}.+{buy_terms})'},
+         {'type': 'efficiencyuse 21', 'pattern':fr'({want_terms}.+({experience_terms}|{suggestion_terms}).+{buy_terms}.+{subscription_terms}.+{regex.able_terms.value}.+{learning_terms})'},
+         {'type': 'efficiencyuse 22', 'pattern':fr'({want_terms}.+({experience_terms}|{suggestion_terms}).+{regex.able_terms.value}.+{experience_terms}.+{subscription_terms})'},
+         {'type': 'efficiencyuse 23', 'pattern':fr'({want_terms}.+{submit_terms}.+{decision_terms}.+{regex.able_terms.value}.+{product_terms}.+{time_terms}.+{receive_terms})'},
+         {'type': 'efficiencyuse 24', 'pattern':fr'({want_terms}.+{legal_terms}.+{fast_terms}.+{observe_terms}.+{regex.able_terms.value}.+({legal_terms}|{task_terms}).+{learning_terms})'},
+         {'type': 'efficiencyuse 25', 'pattern':fr'({want_terms}.+{product_terms}.+{favourite_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+({buy_terms}|{access_terms}))'},
+         {'type': 'efficiencyuse 26', 'pattern':fr'({want_terms}.+{notification_terms}.+{product_terms}.+{regex.able_terms.value}.+{discount_terms}.+{buy_terms})'},
+         {'type': 'efficiencyuse 27', 'pattern':fr'({want_terms}.+{product_terms}.+{based_terms}.+{search_terms}.+{regex.able_terms.value}.+{product_terms}.+{regex.ease_terms.value}.+{find_terms})'},
+         {'type': 'efficiencyuse 28', 'pattern':fr'({want_terms}.+{content_terms}.+{clear_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+{use_terms})'},
+         {'type': 'efficiencyuse 29', 'pattern':fr'({want_terms}.+{fast_terms}.+{access_terms}.+{regex.able_terms.value}.+{time_terms}.+{access_terms})'},
+         {'type': 'efficiencyuse 30', 'pattern':fr'({want_terms}.+{product_terms}.+{based_terms}.+{search_terms}.+{regex.able_terms.value}.+{product_terms}.+{regex.ease_terms.value})'},
+         {'type': 'efficiencyuse 31', 'pattern':fr'({want_terms}.+{content_terms}.+{clear_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+{use_terms})'},
+         {'type': 'efficiencyuse 32', 'pattern':fr'({want_terms}.+{preview_terms}.+{Feature_terms}.+{regex.able_terms.value}.+{result_terms}.+{confident_terms})'},
+         {'type': 'efficiencyuse 33', 'pattern':fr'({want_terms}.+{ui_terms}.+({clear_terms}|{simple_terms}).+{regex.able_terms.value}.+{regex.ease_terms.value}.+{task_terms})'},
+         {'type': 'efficiencyuse 34', 'pattern':fr'({want_terms}.+({search_terms}|{filter_terms}).+{regex.able_terms.value}.+{result_terms}.+{regex.ease_terms.value}.+{find_terms})'},
+         {'type': 'efficiencyuse 35', 'pattern':fr'({want_terms}.+{change_terms}.+{terminate_terms}.+{regex.able_terms.value}.+{wrong_terms}.+{learning_terms})'},
+         {'type': 'efficiencyuse 36', 'pattern':fr'({want_terms}.+{task_terms}.+{observe_terms}.+{regex.able_terms.value}.+{regex.ease_terms.value}.+{again_terms})'},
+         {'type': 'efficiencyuse 37', 'pattern':fr'({want_terms}.+{task_terms}.+{Simultaneously_terms}.+{regex.able_terms.value}.+(({fast_terms}.+{time_terms})|({time_terms}.+{fast_terms})))'},
+        #{'type': 'efficiencyuse 38', 'pattern':fr'({regex.able_terms.value}.+({regex.fast_terms}|{regex.efficiency_terms.value}).+({regex.use_terms.value}|{regex.efficienct_verbs.value}))'}, //bad pattern
+         {'type': 'efficiencyuse 39', 'pattern':fr'({regex.want_terms.value}.+{regex.search_terms.value}.+{regex.fast_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+         {'type': 'efficiencyuse 40', 'pattern':fr'({regex.want_terms.value}.+{regex.automated_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+         {'type': 'efficiencyuse 41', 'pattern':fr'({regex.want_terms.value}.+{regex.task_terms.value}.+{regex.Simultaneously_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+         {'type': 'efficiencyuse 42', 'pattern':fr'({regex.want_terms.value}.+{regex.search_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+        #{'type': 'efficiencyuse 43', 'pattern':fr'({regex.want_terms.value}.+{regex.automated_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|{regex.time_terms.value}))'},//bad pattern
+         {'type': 'efficiencyuse 44', 'pattern':fr'({regex.want_terms.value}.+{regex.default_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+        #{'type': 'efficiencyuse 45', 'pattern':fr'({regex.able_terms.value}.+({regex.efficiency_terms.value}|{regex.time_terms.value}))'} //bad pattern
+         {'type': 'efficiencyuse 46', 'pattern':fr'({regex.want_terms.value}.+{regex.click_terms.value}.+{regex.submit_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+         {'type': 'efficiencyuse 47', 'pattern':fr'({regex.want_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})))'},
+         {'type': 'efficiencyuse 48', 'pattern':fr'({regex.want_terms.value}.+{regex.shortcut_terms.value}.+{regex.able_terms.value}.+({regex.fast_terms.value}|({regex.time_terms.value}).+{regex.task_terms.value}.+{regex.efficienct_verbs.value}))'},
+         {'type': 'efficiencyuse 49', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+({regex.previous_terms.value}|{regex.task_terms.value}).+{regex.observe_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|{regex.fast_terms.value}|({regex.ease_terms.value}.+{regex.access_terms.value})))'},
+         {'type': 'efficiencyuse 50', 'pattern':fr'({regex.want_terms.value}.+{regex.filter_terms.value}.+{regex.have_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
+         {'type': 'efficiencyuse 51', 'pattern':fr'({regex.able_terms.value}.+{regex.task_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
+         {'type': 'efficiencyuse 52', 'pattern':fr'({regex.want_terms.value}.+(({regex.filter_terms.value}.+{regex.Feature_terms.value})|{regex.search_terms.value}).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|({regex.use_terms.value}|{regex.find_terms.value}))))'},
+         {'type': 'efficiencyuse 53', 'pattern':fr'({regex.want_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms}).+{regex.able_terms.value}.+{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))'},
+         {'type': 'efficiencyuse 54', 'pattern':fr'({regex.want_terms.value}.+(({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms})?!.*({regex.learning_terms.value}|{regex.training_terms.value}|{regex.guide_terms.value})).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))?!.*{regex.learning_terms.value})'},
 
     ]
 
@@ -546,7 +585,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
 
     
     
-    for p in learning_pattern:
+    for p in Memorability_pattern:
             if re.search(p['pattern'], lemma_userstory):
                 arr.append({'type':p['type']})
                 print('Nonfunctional user stories are extracted')
@@ -554,7 +593,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
                 return arr
 
     if not matched:
-        for p in efficiency_pattern:
+        for p in efficiencyuse_pattern:
             if re.search(p['pattern'], lemma_userstory):
                 arr.append({'type':p['type']})
                 print('Nonfunctional user stories are extracted')
