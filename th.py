@@ -13,7 +13,7 @@ class regex(Enum):
     training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
     task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها|عملیات|عملیات‌ها)'
     learning_terms = r'(یادگیری|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط|آگاه|یاد گرفت)'
-    use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن|انجام)'
+    use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن|انجام|تکمیل)'
     feedback_terms = r'(فیدبک|بازخورد|نظر|بازخوردهای کاربران|انتقاد سازنده|پاسخ)'
     clear_terms = r'(واضح|شفاف|روشن|بی‌ابهام|ساده|سرراست|گویا|بدون پیچیدگی)'
     fast_terms = r'(سریع|سرعت|فوری|بی‌درنگ|چابک|تند|شتاب)'
@@ -25,16 +25,16 @@ class regex(Enum):
     design_terms = r'(طراحی|ساختار|چیدمان|قالب|طرح‌بندی|نقشه)'
     setting_terms = r'(تنظیمات|پیکربندی|کنفیگ|پاراگراف‌ها|تنظیم)'
     restore_terms = r'(بازگرداندن|بازگردان|بازسازی|ترمیم|برگرداندن)'
-    wrong_terms = r'(غلط|صحیح|درست|اشتباه|خطا|نادرست|بی‌دقتی)'
-    prevention_terms = r'(جلوگیری|ممانعت|پیشگیری|سد کردن|بازداری|مهار)'
-    change_terms = r'(تغییر|تغییرات|اصلاح|بازنگری|دگرگونی)'
+    wrong_terms = r'(غلط|صحیح|درست|اشتباه|نادرست|بی‌دقتی|ناقص)'
+    prevention_terms = r'(جلوگیری|ممانعت|پیشگیری|سد کردن|بازداری|مهار|مانع)'
+    change_terms = r'(تغییر|تغییرات|اصلاح|بازنگری|دگرگونی|درست)'
     preview_terms = r'(پیش نمایش|پیش‌نمایش)'
     accuracy_terms = r'(صحت|درستی|صحیح|درست|بی‌خطا|بی‌نقص)'
     again_terms = r'(مجدد|بازگشت|برگردم|دوباره|از نو|تکرار)'
     continue_terms = r'(ادامه|پیشبرد|دنبال کردن|ادامه دادن|پیش‌روی)'
     previous_terms = r'(قبلی|گذشته|فعالیت‌های قبلی|پیشین|سوابق قبلی|کارهای گذشته)'
     event_terms = r'(رویدادها|سوابق|سابقه|تاریخچه|اتفاقات|حوادث|فعالیت‌ها)'
-    access_terms = r'(دستیابی|دسترسی|راه‌یابی|ورود|اتصال به|باز کردن)'
+    access_terms = r'(دستیابی|دسترسی|راه‌یابی|ورود|اتصال به|باز کردن|دسترس)'
     review_terms = r'(مرور|بازبینی|بررسی|ارزیابی|نگاه مجدد|مرور کردن)'
     update_terms = r'(آپدیت|ارتقا|بازسازی|بروزرسانی|به‌روزرسانی|بهبود|به‌روز)'
     reference_terms = r'(مراجع|مرجع|منابع|مآخذ|ارجاعات|اشارات|استنادها)'
@@ -45,7 +45,7 @@ class regex(Enum):
     ease_terms = r'(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت|ساده|بدون دردسر)'
     compensation_terms = r'(جبرانی|ناهماهنگی|آشفتگی|سرگشتگی|سردرگمی|تعادل‌بخشی|جبران خسارت)'
     #restore_terms = r'(بازگرداندن|بازگردان)'
-    error_terms = r'(خطا|اشتباه|غلط|نقص|ایراد|مشکل)'
+    error_terms = r'(خطا|نقص|ایراد|مشکل|ناقص)'
     performance_terms = r'(عملکرد|کارکرد|بازدهی|پرفورمنس|کارایی|بهره‌وری)'
     skill_terms = r'(مهارت|مهارت‌ها|توانایی|قابلیت|مهارت‌آموزی|توانمندی)'
     issue_terms = r'(مشکل|اشکال|چالش|معضل|دشواری|نقص|دردسر)'
@@ -86,7 +86,7 @@ class regex(Enum):
     filter_terms= r'(فیلتر|فیلتر کردن|فیلتر‌کردن|پالایش|پالایش کردن|پالایش‌کردن)'
     size_terms= r'(اندازه|اندازه‌ها|اندازه‌های|اندازه‌های مختلف|اندازه مختلف|سایز)'
     read_terms= r'(خواندن|خواندن مطالب|خواندن مطالب|مطالعه|مطالعه کردن)'
-    notification_terms= r'(اطلاعیه|اطلاعیه‌ها|اطلاعیه‌های|اطلاعیه‌های جدید|اطلاعیه جدید|اعلان|اعلان‌ها|اعلان‌های|اعلان‌های جدید|اعلان جدید|هشدار)'
+    notification_terms= r'(اطلاعیه|اطلاعیه‌ها|اطلاعیه‌های|اطلاعیه‌های جدید|اطلاعیه جدید|اعلان|اعلان‌ها|اعلان‌های|اعلان‌های جدید|اعلان جدید|هشدار|اعلام|پیشنهاد|پیام)'
     based_terms = r'(پایه|اساس|مبنا|بنیاد|بنیادی|اساسی|مبنایی)'
     inventory_terms = r'(انبار|انبارها|انبارهای|انبارهای موجود|انبار موجود|موجودی)'
     shopping_cart_terms = r'(سبد خرید|سبد خریدها|سبد خریدهای|سبد خریدهای موجود|سبد خرید موجود|سبد خریدهای موجود)'
@@ -116,7 +116,17 @@ class regex(Enum):
     improve_terms= r'(بهبود|بهبودی|بهبودی‌ها|بهبودی‌های|بهبودی‌های نرم‌افزار|بهبود نرم‌افزار)'
     timeoflearning_terms = r'(زمان آموزش|زمان آموزشی|زمان آموزش‌ها|زمان آموزش‌های|زمان آموزش‌های نرم‌افزار|زمان آموزش نرم‌افزار|زمان یادگیری)'
     refer_terms= r'(مراجعه|مراجعه کردن|مراجعه‌کردن|مراجعه نمودن|مراجعه‌نمودن)'
-    
+    keepon_terms= r'(ادامه|ادامه دادن|ادامه‌دادن|ادامه نمودن|ادامه‌نمودن)'
+    errornotification_terms= r'(پیام خطا|هشدار خطا|پیام خطای)'
+    tell_terms= r'(گفتن|گفتن به|گفتن به کاربر|گفتن به کاربران|گفتن به کاربران|گفتن به کاربران نرم‌افزار|گفتن به کاربر نرم‌افزار|گفت|گو)'
+    solve_terms= r'(حل|حل کردن|حل‌کردن|حل نمودن|حل‌نمودن|برطرف|رفع)'
+    dangerious_terms= r'(خطرناک|خطرناکی|خطرناکی‌ها|خطرناکی‌های|خطرناکی‌های نرم‌افزار|خطرناکی نرم‌افزار|خطرناکی‌های نرم‌افزار)'
+    weak_terms= r'(ضعیف|ضعیفی|ضعیفی‌ها|ضعیفی‌های|ضعیفی‌های نرم‌افزار|ضعیفی نرم‌افزار|ضعیفی‌های نرم‌افزار)'
+    strong_terms= r'(قوی|قویی|قویی‌ها|قویی‌های|قویی‌های نرم‌افزار|قویی نرم‌افزار|قویی‌های نرم‌افزار)'
+    execute_terms= r'(اجرا|اجرا کردن|اجرا‌کردن|اجرا نمودن|اجرا‌نمودن|انجام|انجام دادن|انجام‌دادن|انجام نمودن|انجام‌نمودن|برقرار کردن|برقرار|پیاده‌سازی| پیاده سازی|مستقر|استقرار)'
+    informed_terms= r'(آگاه|آگاهی|آگاهی‌ها|آگاهی‌های|مطلع|اطلاع)'
+    support_terms= r'(پشتیبانی|پشتیبانی کردن|پشتیبانی‌کردن|پشتیبانی نمودن|پشتیبانی‌نمودن|حمایت|حمایت کردن|حمایت‌کردن|حمایت نمودن|حمایت‌نمودن)'
+    #دادن بازخورد لحظه‌ای مرتبط با داستان کاربری مرتبط با قابلیت استفاده می‌باشد
 
 
 
@@ -341,11 +351,11 @@ def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 #start of phase 3
 def userstory_nonfunctional(lemma_userstory: str) -> list:
     arr = []
-    matched = True
+    matched = False
     want_terms = r'(خواست#خواه)'
     able_terms = r'(توانست#توان)'
     training_terms = r'(آموزش|آموزشی|دوره آموزشی|تربیت|کارگاه|آموزشگاه|آموزش‌دهی|کلاس)'
-    task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها|عملیات|عملیات‌ها)'
+    task_terms = r'(وظایف|کارها|امور|وظیفه|فعالیت|مسئولیت|وظیفه‌محور|کاربردها|عملیات|عملیات‌ها|اقدام)'
     learning_terms = r'(یادگیری|گیر|گرفت|فهمیدن|فهم|درک|آموختن|آموزش دیدن|فراگیری|شناخت|مسلط|آگاه)'
     use_terms = r'(استفاده|بهره‌برداری|بهره‌گیری|کاربرد|به‌کارگیری|به‌کار بردن|به‌کار گرفتن)'
     feedback_terms = r'(فیدبک|بازخورد|نظر|بازخوردهای کاربران|انتقاد سازنده|پاسخ)'
@@ -420,7 +430,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     filter_terms= r'(فیلتر|فیلتر کردن|فیلتر‌کردن|پالایش|پالایش کردن|پالایش‌کردن)'
     size_terms= r'(اندازه|اندازه‌ها|اندازه‌های|اندازه‌های مختلف|اندازه مختلف|سایز)'
     read_terms= r'(خواندن|خواندن مطالب|خواندن مطالب|مطالعه|مطالعه کردن)'
-    notification_terms= r'(اطلاعیه|اطلاعیه‌ها|اطلاعیه‌های|اطلاعیه‌های جدید|اطلاعیه جدید|اعلان|اعلان‌ها|اعلان‌های|اعلان‌های جدید|اعلان جدید|هشدار)'
+    notification_terms= r'(اطلاعیه|اطلاعیه‌ها|اطلاعیه‌های|اطلاعیه‌های جدید|اطلاعیه جدید|اعلان|اعلان‌ها|اعلان‌های|اعلان‌های جدید|اعلان جدید|هشدار|پیام)'
     based_terms = r'(پایه|اساس|مبنا|بنیاد|بنیادی|اساسی|مبنایی)'
     inventory_terms = r'(انبار|انبارها|انبارهای|انبارهای موجود|انبار موجود|موجودی)'
     shopping_cart_terms = r'(سبد خرید|سبد خریدها|سبد خریدهای|سبد خریدهای موجود|سبد خرید موجود|سبد خریدهای موجود)'
@@ -508,15 +518,55 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
         {'type': 'Memorability 16', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+(({regex.setting_terms.value}.+?{regex.duplicate_terms.value})|{regex.setting_terms.value}).*{regex.ease_terms.value}.*{regex.use_terms.value})'},
         {'type': 'Memorability 17', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}).+{regex.refer_terms.value})'},
         {'type': 'Memorability 18', 'pattern':fr'({regex.want_terms.value}.+{regex.guide_terms.value}.+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}).+{regex.learning_terms.value}.+{regex.Forgetfulness_terms.value})'},
-      
+        {'type': 'Memorability 19', 'pattern':fr'({regex.want_terms.value}.+{regex.observe_terms.value}.+{regex.able_terms.value}.+?{regex.time_terms.value}.+{regex.ease_terms.value}.+{regex.keepon_terms.value})'},
+        {'type': 'Memorability 20', 'pattern':fr'({regex.want_terms.value}.+({regex.previous_terms.value}|{regex.event_terms.value}).+({regex.observe_terms.value}|{regex.presentation_terms.value}).+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}).+{regex.again_terms.value}.+{regex.keepon_terms.value})'},
+        {'type': 'Memorability 21', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.reminder_terms.value}|{regex.Forgetfulness_terms.value}|{regex.access_terms.value}))'},
+        {'type': 'Memorability 22', 'pattern':fr'({regex.want_terms.value}.+{regex.guide_terms.value}.+{regex.automated_terms.value}.+{regex.able_terms.value}.+{regex.Forgetfulness_terms.value}.+{regex.learning_terms.value})'},
+        {'type': 'Memorability 23', 'pattern':fr'({regex.want_terms.value}.+{regex.guide_terms.value}.+{regex.able_terms.value}.+{regex.Forgetfulness_terms.value})'},
+        {'type': 'Memorability 24', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.able_terms.value}.+{regex.reminder_terms.value}.+{regex.change_terms.value})'},
+        {'type': 'Memorability 25', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+({regex.save_terms.value}|{regex.access_terms.value}).+{regex.able_terms.value}.+{regex.previous_terms.value}.*{regex.review_terms.value})'},
+        {'type': 'Memorability 26', 'pattern':fr'({regex.want_terms.value}.+{regex.previous_terms.value}.+{regex.reminder_terms.value}.+{regex.able_terms.value}.+({regex.review_terms.value}|{regex.Forgetfulness_terms.value}))'},
+        {'type': 'Memorability 27', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.efficienct_verbs.value})'},
+        {'type': 'Memorability 28', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.able_terms.value}.+{regex.Forgetfulness_terms.value})'},
+        {'type': 'Memorability 29', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.previous_terms.value}|{regex.again_terms.value}))'},
+        {'type': 'Memorability 30', 'pattern':fr'({regex.want_terms.value}.+{regex.reminder_terms.value}.+{regex.able_terms.value}.+{regex.use_terms.value})'},
 
 
-
-    
-
-    
     ]
 
+    error_pattern = [
+        {'type': 'error 00', 'pattern':fr'({regex.want_terms.value}.+{regex.errornotification_terms.value}.+{regex.able_terms.value}.+({regex.wrong_terms.value}|{regex.error_terms.value}).+({regex.identification_terms.value}|{regex.change_terms.value}))'},
+        {'type': 'error 01', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+({regex.tell_terms.value}|{regex.notification_terms.value}).+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
+        {'type': 'error 02', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.tell_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.change_terms.value})'},
+        {'type': 'error 03', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
+        {'type': 'error 04', 'pattern':fr'({regex.want_terms.value}.+{regex.error_terms.value}.+{regex.presentation_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.wrong_terms.value})'},
+        {'type': 'error 05', 'pattern':fr'({regex.want_terms.value}.+{regex.error_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.wrong_terms.value})'},
+        {'type': 'error 06', 'pattern':fr'({regex.want_terms.value}.+{regex.error_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.wrong_terms.value})'},
+        {'type': 'error 07', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.automated_terms.value}.*({regex.identification_terms.value}|{regex.change_terms.value}).+{regex.able_terms.value}.+({regex.error_terms.value}|{regex.wrong_terms.value}).+{regex.prevention_terms.value})'},
+        {'type': 'error 08', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.prevention_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
+        {'type': 'error 09', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.wrong_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.identification_terms.value})'},
+        {'type': 'error 10', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.error_terms.value}.+{regex.able_terms.value}.+{regex.again_terms.value})'},
+        {'type': 'error 11', 'pattern':fr'({regex.want_terms.value}.+({regex.error_terms.value}|{regex.wrong_terms.value}).+{regex.change_terms.value}.+{regex.able_terms.value}.+({regex.error_terms.value}|{regex.solve_terms.value}))'},
+        {'type': 'error 12', 'pattern':fr'({regex.want_terms.value}.+({regex.notification_terms.value}|{regex.errornotification_terms.value}).+{regex.able_terms.value}.+({regex.prevention_terms.value}|{regex.solve_terms.value}))'}, #برای برخی از داستان‌های کاربری با موضوعات غیر مرتبط ست می‌شود
+        {'type': 'error 13', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.tell_terms.value}.+{regex.able_terms.value}.+{regex.change_terms.value})'},
+        {'type': 'error 14', 'pattern':fr'({regex.want_terms.value}.+({regex.wrong_terms.value}|{regex.error_terms.value}).+{regex.able_terms.value}.+({regex.identification_terms.value}|{regex.solve_terms.value}))'},
+        {'type': 'error 15', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.change_terms.value}.+{regex.able_terms.value}.+({regex.use_terms.value}|{regex.solve_terms.value}))'},
+        {'type': 'error 16', 'pattern':fr'({regex.want_terms.value}.+{regex.task_terms.value}.*{regex.dangerious_terms.value}.+{regex.able_terms.value}.+{regex.wrong_terms.value}.+{regex.prevention_terms.value})'},
+        {'type': 'error 17', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.prevention_terms.value}.+{regex.able_terms.value}.+{regex.wrong_terms.value})'},
+        {'type': 'error 18', 'pattern':fr'({regex.want_terms.value}.+({regex.weak_terms.value}|{regex.strong_terms.value}).+{regex.feedback_terms.value}.+{regex.able_terms.value}.+({regex.strong_terms.value}|{regex.weak_terms.value}).+({regex.prevention_terms.value}|{regex.solve_terms.value}|{regex.task_terms.value}))'},
+        {'type': 'error 19', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.able_terms.value}.+({regex.wrong_terms.value}|{regex.error_terms.value}|{regex.change_terms.value}))'},
+        {'type': 'error 20', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.able_terms.value}.+{regex.change_terms.value})'},
+        {'type': 'error 21', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.able_terms.value}.+{regex.informed_terms.value}.+({regex.execute_terms.value}|{regex.review_terms.value}))'},
+        {'type': 'error 22', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.able_terms.value}.+({regex.execute_terms.value}|{regex.review_terms.value}))'},
+        {'type': 'error 23', 'pattern':fr'({regex.want_terms.value}.+({regex.error_terms.value}|{regex.question_terms.value}).+{regex.support_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+({regex.change_terms.value}|{regex.solve_terms.value}|{regex.prevention_terms.value}))'},
+        {'type': 'error 24', 'pattern':fr'({regex.want_terms.value}.+({regex.error_terms.value}|{regex.question_terms.value}).+{regex.support_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value})'},
+
+
+
+
+
+
+    ]
     
     
     efficiencyuse_pattern = [
@@ -591,7 +641,20 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
                 print('Nonfunctional user stories are extracted')
                 matched = True
                 return arr
-
+    if not matched:
+        for p in learnability_pattern:
+            if re.search(p['pattern'], lemma_userstory):
+                arr.append({'type':p['type']})
+                print('Nonfunctional user stories are extracted')
+                matched = True
+                return arr
+    if not matched:
+        for p in error_pattern:
+            if re.search(p['pattern'], lemma_userstory):
+                arr.append({'type':p['type']})
+                print('Nonfunctional user stories are extracted')
+                matched = True
+                return arr            
     if not matched:
         for p in efficiencyuse_pattern:
             if re.search(p['pattern'], lemma_userstory):
