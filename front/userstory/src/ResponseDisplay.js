@@ -3,7 +3,6 @@ import React from "react";
 function ResponseDisplay({ responses }) {
   return (
     <div>
-      <h3>📌 پاسخ‌های دریافتی</h3>
       {responses.length > 0 ? (
         responses.map((response, index) => (
           <div key={index} style={styles.responseCard}>
@@ -29,6 +28,7 @@ const styles = {
     backgroundColor: "#e6f7ff",
     borderRadius: "5px",
     border: "1px solid #007bff",
+    direction: "rtl",
   },
 };
 

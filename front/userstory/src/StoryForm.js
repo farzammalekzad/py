@@ -50,12 +50,12 @@ function StoryForm({ addResponse }) {
         <textarea
           value={story}
           onChange={handleChange}
-          placeholder="✍ لطفاً داستان کاربری خود را اینجا بنویسید..."
+          placeholder="✍ لطفاً داستان کاربری خود را اینجا بنویسید"
           rows="5"
           style={styles.textarea}
         />
         <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? "⏳ در حال ارسال..." : "🚀 ارسال"}
+          {loading ? "⏳ در حال ارسال..." : " ارسال"}
         </button>
       </form>
 
@@ -81,7 +81,7 @@ const styles = {
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "15px",
+    gap: "10px",
   },
   textarea: {
     width: "100%",
@@ -92,6 +92,8 @@ const styles = {
     transition: "border 0.3s ease-in-out",
     outline: "none",
     resize: "none",
+    textAlign: "right",
+    dirction: "rtl",
   },
   button: {
     backgroundColor: "#007bff",
