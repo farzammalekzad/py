@@ -8,8 +8,8 @@ import timeit
 import threading
 import time
 from enum import Enum
-from patterns import *
 from fastapi.middleware.cors import CORSMiddleware
+from patterns import learnability_pattern, Memorability_pattern, error_pattern, efficiencyuse_pattern, satisfaction_patterns
 
 
 app = FastAPI()
@@ -149,11 +149,12 @@ def other_nonfunctional_requirements(pattern_type, lemma_userstory: str) -> list
         if pattern_type != Memorability_pattern:
             if re.search(p['pattern'], lemma_userstory):
                 arr.append('حفظ یادگیری')
-    return arr
+    return '-'.join(arr)
    
 
 @app.post("/analyze-story", response_model=StoryResponse)
 async def analyze_story(story_request: StoryRequest):
+    
     role, capability, objective = userstory_check_first(story_request.story)
     if role and capability and objective:
         role, capability, objective = userstory_check_first(story_request.story)

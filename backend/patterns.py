@@ -1,11 +1,5 @@
-import re
-import numpy as np
-import pandas as pd
-from hazm import *
-import timeit
-import threading
-import time
 from enum import Enum
+
 
 class regex(Enum):
     want_terms = r'(خواست#خواه)'
@@ -128,235 +122,8 @@ class regex(Enum):
     support_terms= r'(پشتیبانی|پشتیبانی کردن|پشتیبانی‌کردن|پشتیبانی نمودن|پشتیبانی‌نمودن|حمایت|حمایت کردن|حمایت‌کردن|حمایت نمودن|حمایت‌نمودن)'
     good_terms= r'(خوب|خوبی|خوبی‌ها|بهتر|بهتری|راحت)'
     satisfaction_terms_pattern= r'(راحتی استفاده|کاربرپسند|سادگی|ناوبری آسان|قابل فهم|بدون پیچیدگی|قابلیت شهودی|یادگیری آسان|بدون نیاز به آموزش|کمترین کلیک ممکن|سرعت بالا|انجام سریع وظایف|کاهش تلاش کاربر|بدون نیاز به ورود اطلاعات اضافی|فرآیند یکپارچه|بازخورد فوری|نمایش پیام‌های واضح|راهنمایی کاربر|پیش‌بینی نیازهای کاربر|کنترل کامل بر عملیات|قابل بازگشت|سازگاری با دستگاه‌های مختلف|دسترسی‌پذیری|قابل استفاده در موبایل و دسکتاپ|امکان شخصی‌سازی|سازگاری با مرورگرهای مختلف|حداقل خطاهای کاربر|نمایش پیغام‌های خطای شفاف|راهنمایی گام‌به‌گام|کاهش بار شناختی کاربر|ورود اطلاعات با کمترین تلاش|ارائه پیشنهادهای هوشمند|تجربه راحت|احساس اطمینان|تجربه کاربری|لذت|تجربه شخصی|رضایت|رضایت بخش|احساس رضایت|راحت|راحتی)'
-
-    
-    #دادن بازخورد لحظه‌ای مرتبط با داستان کاربری مرتبط با قابلیت استفاده می‌باشد
-
-
-
-
-#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/data.csv') 
-#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/efficiency.csv') 
-#df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/sample2.csv') 
-df = pd.read_csv('/Users/farrr/Desktop/Desktop/project/final.csv') 
-
-
-def show_status():
-    while True:
-        print("Status: Code is Running ...")
-        time.sleep(5)
-
-status_thread = threading.Thread(target=show_status, daemon=True)
-status_thread.start()
-
-def missing(df:pd.DataFrame) -> pd.DataFrame:
-    print('Shape of DataFrame:', df.shape)
-    missing_values = df.isnull().sum()
-    indeices = df[df.isna().any(axis=1)].index.to_list()
-    print(f"report of missing values: \n{missing_values}")
-    print(f"Indices of rows with missing values: {indeices}")
-    return df
-
-def droping_white_space(df:pd.DataFrame) -> pd.DataFrame:
-    blanks = []
-    print(df)
-    for no, row in df.iterrows():
-        for col in df.columns:
-            value = row[col]
-            if isinstance(value, str) and value.isspace():
-                blanks.append(no)
-    print(f"Number of blanks: {len(blanks)}")
-    print("Blank rows:", blanks)
-    df = df.drop(index=blanks).reset_index(drop=True)
-    return df
-
-def delete_missing(df:pd.DataFrame) -> pd.DataFrame:
-    df = df.dropna()
-    print('Shape after dropping missing values:', df.shape)
-
-# start of phase 1
-def userstory_check_first(userstory):
-    #pattern_old = r"^به عنوان یک\s+(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)\.$"
-    #pattern_old2 = r"^به عنوان یک\s+(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+)$"
-    pattern = r"^به عنوان\s+(?:یک\s+)?(.+?)،?\s+من می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)$"
-
-
-    match = re.match(pattern,userstory)
-    if match:
-        role = match.group(1).strip()
-        capability = match.group(2).strip()
-        objective = match.group(3).strip()
-        #print("Role:", match.group(1).strip())
-        #print("Capability:", match.group(2).strip())
-        #print("Objective:", match.group(3).strip())
-        return role, capability, objective
-    else:
-        #print("Invalid User Story")
-        return None, None, None
-
-def userstory_check_second(row):
-    role, capability, objective = userstory_check_first(row['userstory'])
-    return pd.Series({'role': role, 'capability': capability, 'objective': objective})
-
-def userstory_check_final(df: pd.DataFrame) -> pd.DataFrame:
-    print("shape of dataframe is: ",df.shape[0])
-    #output_file = "/Users/farrr/Desktop/Desktop/project/userstoryanalysis.csv"
-    df[['role', 'capability', 'objective']] = df.apply(userstory_check_second, axis=1)
-    df_cleaned = df.dropna()
-    #df_cleaned.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print("shape of dataframe after deleting invalid user story is: ",df_cleaned.shape[0])
-    #print('all user stories are reviewed and valid userstories saved in userstoryanalysis.csv')
-    return df_cleaned
-
-def phase_one(df:pd.DataFrame) -> pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/phase_one.csv"
-    df_cleaned = userstory_check_final(df)
-    #df_cleaned.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('phase one is done')
-    return df_cleaned
-
-# end of phase 1
-
-# start of phase 2
-def phase_two(df:pd.DataFrame)->pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/phase_two.csv"
-    corrected_informal_df = informal_normalize_dataframe(df)
-    normalized_dataframe = normalize_dataframe(corrected_informal_df)
-    tokenized_df = tokenize_dataframe(normalized_dataframe)
-    #در این قسمت کلمات توقف از برنامه حذف می‌شوند تا بتوان بدون این بخش متن‌ها را بررسی کرد برای این کار کد زیر دور زده می‌شود
-    stopwords_df = stopwords_dataframe(tokenized_df)
-    lemma_df = lemmatizer_dataframe(stopwords_df)
-    #lemma_df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    return lemma_df
-
-
-
-
-
-""" این تابع با توجه به اینکه بخش‌های مختلف داستان کاربری را جدا نمی‌کند فعلا در دستور کار نمی‌باشد
-def userstory_check(df: pd.DataFrame) -> pd.DataFrame:
-    output_file = "/Users/farrr/Desktop/Desktop/project/userstorycheck.csv"
-    pattern = r"^به عنوان(.+)می‌خواهم(.+)بتوانم(.+)"
-    pattern2 = r"^به عنوان\s+(.+?)،?\s+می‌خواهم\s+(.+?)\s+تا بتوانم\s+(.+?)\.$"
-    df_filtered = df[df['userstory'].str.contains(pattern2, regex=True, na=False)]
-    df_filtered.to_csv(output_file, index=False, encoding='utf-8-sig')
-    return df_filtered """
-
-
-""" این تابع تنها برای تست فاز ۱ نوشته شده بود
-def check_function_userstory(userstories: list):
-    # pattern = r"^\bبه عنوان\b(.+)\bمن می‌خواهم\b(.+)\bتا بتوانم\b(.+)"
-    pattern = r"^به عنوان(.+)من می‌خواهم(.+)تا بتوانم(.+)"
-    arr = []
-    invalid_userstories = []
-    correct_userstories = []
-    count: int = 0
-    t_count:int = 0
-    f_count:int = 0
-    for userstory in userstories:
-        count += 1
-        result = re.search(pattern,userstory)
-        if result:
-            t_count = t_count + 1
-            correct_userstories.append(userstory)
-        else:            
-            f_count = f_count + 1
-            arr.append(count)
-            invalid_userstories.append([userstory,count])
-    print("Status of UserStory : Number of Correct UserStory: ",t_count )
-    print(f"Status of UserStory : Number of inCorrect UserStory: ",f_count, f"\nnumber of invalid userstories is: {arr}" )
-    if invalid_userstories:
-        print("\nInvalid User Stories:")
-        for story in invalid_userstories:
-            print("-", story)
-    return correct_userstories """
-    
-def fix_persian_halfspace(df:pd.DataFrame) -> pd.DataFrame:
-    half_space = '\u200c'
-    df.loc[:,'userstory_halfspace'] = df['userstory'].str.replace(half_space,' ')
-    #print(df)
-    return df
-    
-""" def normalizer(df: pd.DataFrame) -> pd.DataFrame: #commented in order to use other functions
-    normalizer = hazm.Normalizer()
-    df['normalized_userstory'] = df['userstory'].apply(normalizer.normalize)
-    output_file = "/Users/farrr/Desktop/Desktop/project/normalized_data.csv"
-    df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    return df """
-
-def tokenize(userstory):
-     tokens = word_tokenize(userstory)
-     return tokens
-
-def tokenize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/tokenized_data.csv"
-    df.loc[:,'tokenized_userstory'] = df['normalized_dataframe'].apply(tokenize)
-    #df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('Tokenization is done')
-    return df
-
-def informal_normalize(userstory):
-    normalizer = InformalNormalizer()
-    informal_normalized_text = normalizer.normalize(userstory)
-    small_array = informal_normalized_text[0]
-    first_elements = [inner[0] for inner in small_array if len(inner) > 0]
-    normalized_text = ' '.join(first_elements)
-    return normalized_text
-
-
-
-
-def informal_normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/informal_normalized_data.csv"
-    df.loc[:,'informal_normalized_userstory'] = df['userstory'].apply(informal_normalize)
-    #df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('Informal Normalization is done')
-    return df
-
-def normalize(userstory: str):
-    normalizer = Normalizer()
-    normalized_text = normalizer.normalize(userstory)
-    return normalized_text
-
-def normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/tokenized_data.csv"
-    df.loc[:,'normalized_dataframe'] = df['informal_normalized_userstory'].apply(normalize)
-    #df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('Normalization is done')
-    return df
-
-def stopwords(tokens):
-    stop_words = stopwords_list()
-    filtered_tokens = [word for word in tokens if word not in stop_words]
-    return filtered_tokens
-
-def stopwords_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/stopwords_data.csv"
-    df.loc[:,'stopwords_userstory'] = df['tokenized_userstory'].apply(stopwords)
-    #df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('Stopwords are removed')
-    return df
-
-def lemmatizer(tokens):
-    lemmatizer = Lemmatizer()
-    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
-    return lemmatized_tokens
-
-def lemmatizer_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    #output_file = "/Users/farrr/Desktop/Desktop/project/lemmatized_data.csv"
-    df.loc[:,'lemmatized_userstory'] = df['stopwords_userstory'].apply(lemmatizer)
-    df.loc[:,'string_lemmatized_userstory'] = df['lemmatized_userstory'].apply(lambda x: ' '.join(x))
-    #df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('Lemmatization is done')
-    return df
-
-#end of phase 2
-
-#start of phase 3
-def userstory_nonfunctional(lemma_userstory: str) -> list:
-    arr = []
-    matched = False
-    learnability_pattern = [
+   
+learnability_pattern = [
           {'type': 'learnability 00', 'pattern':fr'{regex.training_terms.value}.+{regex.learning_terms.value}.+{regex.use_terms.value}'},
           {'type': 'learnability 02', 'pattern':fr'{regex.guide_terms.value}.+{regex.access_terms.value}.+{regex.learning_terms.value}.+{regex.use_terms.value}'},
           {'type': 'learnability 03', 'pattern':fr'{regex.clear_terms.value}.+{regex.ease_terms}.+{regex.fast_terms.value}.+{regex.learning_terms.value}'},
@@ -402,7 +169,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
           {'type': 'learnability 44', 'pattern':fr'({regex.want_terms.value}.+({regex.guide_terms.value}|{regex.learning_terms.value}|{regex.training_terms.value}).+{regex.able_terms.value}.+{regex.ease_terms.value}(.+{regex.use_terms.value}?))'},
     ]
 
-    Memorability_pattern = [
+Memorability_pattern = [
         {'type': 'Memorability 00', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.task_terms.value}.+{regex.able_terms.value}.+{regex.ease_terms.value}.*({regex.recovery_terms.value}|{regex.reminder_terms.value}))'},
         {'type': 'Memorability 01', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.task_terms.value}.+{regex.able_terms.value}.+{regex.ease_terms.value}.*{regex.access_terms.value}.+{regex.reminder_terms.value})'},
         {'type': 'Memorability 02', 'pattern':fr'({regex.want_terms.value}.+{regex.progress_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+{regex.continue_terms.value})'},
@@ -438,7 +205,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
 
     ]
 
-    error_pattern = [
+error_pattern = [
         {'type': 'error 00', 'pattern':fr'({regex.want_terms.value}.+{regex.errornotification_terms.value}.+{regex.able_terms.value}.+({regex.wrong_terms.value}|{regex.error_terms.value}).+({regex.identification_terms.value}|{regex.change_terms.value}))'},
         {'type': 'error 01', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+({regex.tell_terms.value}|{regex.notification_terms.value}).+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
         {'type': 'error 02', 'pattern':fr'({regex.want_terms.value}.+{regex.wrong_terms.value}.+{regex.tell_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.change_terms.value})'},
@@ -473,7 +240,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
     ]
     
     
-    efficiencyuse_pattern = [
+efficiencyuse_pattern = [
 
 
         #efficiency
@@ -532,142 +299,13 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
          {'type': 'efficiencyuse 52', 'pattern':fr'({regex.want_terms.value}.+(({regex.filter_terms.value}.+{regex.Feature_terms.value})|{regex.search_terms.value}).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|({regex.use_terms.value}|{regex.find_terms.value}))))'},
          {'type': 'efficiencyuse 53', 'pattern':fr'({regex.want_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms}).+{regex.able_terms.value}.+{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))'},
          {'type': 'efficiencyuse 54', 'pattern':fr'({regex.want_terms.value}.+(({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms})?!.*({regex.learning_terms.value}|{regex.training_terms.value}|{regex.guide_terms.value})).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))?!.*{regex.learning_terms.value})'},
-
     ]
 
-    satisfaction_patterns = [
+satisfaction_patterns = [
          {'type': 'satisfaction 00', 'pattern':fr'({regex.want_terms.value}.+({regex.review_terms.value}|{regex.grading_terms.value}).+{regex.product_terms.value}.+{regex.able_terms.value}.+{regex.subscription_terms.value})'},
          {'type': 'satisfaction 01', 'pattern':fr'({regex.want_terms.value}.+{regex.support_terms.value}.+{regex.access_terms.value}.+{regex.able_terms.value}.+{regex.experience_terms.value}.+{regex.good_terms.value})'},
          {'type': 'satisfaction 02', 'pattern':fr'({regex.want_terms.value}.+{regex.able_terms.value}.+{regex.satisfaction_terms_pattern.value})'},
-
-
-
     ]
 
-
-
+    # lemma_userstory is already a string, no need to join
     
-    
-    for p in satisfaction_patterns:
-            if re.search(p['pattern'], lemma_userstory):
-                arr.append({'type':p['type']})
-                print('Nonfunctional user stories are extracted')
-                matched = True
-                return arr
-    if not matched:
-        for p in learnability_pattern:
-            if re.search(p['pattern'], lemma_userstory):
-                arr.append({'type':p['type']})
-                print('Nonfunctional user stories are extracted')
-                matched = True
-                return arr
-    if not matched:
-        for p in error_pattern:
-            if re.search(p['pattern'], lemma_userstory):
-                arr.append({'type':p['type']})
-                print('Nonfunctional user stories are extracted')
-                matched = True
-                return arr            
-    if not matched:
-        for p in efficiencyuse_pattern:
-            if re.search(p['pattern'], lemma_userstory):
-                arr.append({'type':p['type']})
-                print('Nonfunctional user stories are extracted')
-                matched = True
-                return arr
-
-def userstory_nonfunctional_identification(df: pd.DataFrame):
-    output_file = "/Users/farrr/Desktop/Desktop/project/nonfunctional_userstory.csv"
-    df.loc[:,'nonfunctional_userstory'] = df['string_lemmatized_userstory'].apply(userstory_nonfunctional)
-    df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('All Nonfunctional user stories are extracted')
-
-
-#userstory checked with useability nonfunctional requirements
-
-def userstory_useability(lemma_userstory: str):
-    arr = []
-    pattern = [
-        #useability 
-        {'type': 'useability', 'pattern':fr'({regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.clear_terms.value}|{regex.automated_terms.value}|{regex.simple_terms.value}|{regex.time_terms.value}|{regex.learning_terms.value}))'},
-
-
-        #not useability
-        {'type': 'not useability', 'pattern':fr'({regex.notuseability_terms.value})'},
-    ]
-    matched = False
-    for p in pattern:
-        if re.search(p['pattern'], lemma_userstory):
-            arr.append({'type':p['type']})
-            print('user stories are checked')
-            matched=True
-            break
-    if not matched:
-        arr.append({'type': 'need to be checked'})
-    return arr
-
-
-def userstory_useability_check(df: pd.DataFrame):
-    output_file = "/Users/farrr/Desktop/Desktop/project/useability_userstory.csv"
-    df.loc[:,'useability_userstory'] = df['string_lemmatized_userstory'].apply(userstory_useability)
-    df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print('All Useability user stories are identified')
-   
-
-def test():
-    #userstory_useability_check(df)
-    userstory_nonfunctional_identification(df)
-    print('phase 3 is done')
-#end of phase 3
-
-
-
-def main():
-    output_file = "/Users/farrr/Desktop/Desktop/project/final.csv"
-    phase_one_df = phase_one(df)
-    phase_two_df = phase_two(phase_one_df)
-    phase_two_df.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print ('all phases are done')
-
-    #userstory_check_final(df)
-    #df_half = fix_persian_halfspace(df)
-    #filtered_df=userstory_check(df)
-    #missing(filtered_df)
-    #delete_missing(filtered_df)
-    #droping_white_space(filtered_df)
-    #normalize_dataframe(filtered_df)
-    #tokenized_df = tokenize_dataframe(df)
-    #stopwords_df = stopwords_dataframe(tokenized_df)
-    #lemmatizer_dataframe(stopwords_df)
-    
-    
-
-
-
-#main()
-try:
-    execution_time = timeit.timeit(test, number=1) 
-    print(f"execution time is {execution_time:.5f} seconds")
-except KeyboardInterrupt:
-    print('Code is terminated by user')
-    exit()
-finally:
-    print('see the result in final.csv')
-    exit()
-
-
-    
-
-
-
-
-
-
-#filtered = userstory_check(df)
-#userstory_check(df)
-#missing(df)
-#delete_missing(df)
-#droping_white_space(df)
-#fix_persian_halfspace(df)
-#normalizer(df)
-#informal_normalize(userstory)
