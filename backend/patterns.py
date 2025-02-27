@@ -36,7 +36,7 @@ class regex(Enum):
     save_terms = r'(حفظ|بایگانی|ذخیره|سیو|نگهداری|ثبت)'
     path_terms = r'(مسیر|راه|جهت‌گیری|روش|راهکار|جهت)'
     order_terms = r'(سفارش|درخواست|رزرو|سفار)'
-    ease_terms = r'(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت|ساده|بدون دردسر)'
+    ease_terms = r'(به‌سادگی|به‌راحتی|راحتی|سادگی|سریع|سرعت|به‌سرعت|ساده|بدون دردسر|بلافاصله|خودکار|فوراً|فورا)'
     compensation_terms = r'(جبرانی|ناهماهنگی|آشفتگی|سرگشتگی|سردرگمی|تعادل‌بخشی|جبران خسارت)'
     #restore_terms = r'(بازگرداندن|بازگردان)'
     error_terms = r'(خطا|نقص|ایراد|مشکل|ناقص)'
@@ -97,7 +97,7 @@ class regex(Enum):
     automated_terms= r'(خودکار|خودکارسازی|خودکارسازی شده|خودکارسازی‌شده)'
     satisfaction_terms= r'(رضایت|رضایت‌بخشی|رضایت‌بخش|رضایت‌بخشی|رضایت‌بخش)'
     notuseability_terms= r'(سرعت بارگذاری|زمان پاسخ‌دهی|عملکرد بهینه|منابع سیستم|داده امن|حریم خصوصی|رمزنگاری|محرمانگی|پایداری سیستم|اطلاعات دست رفت|عملکرد پایدار|بازیابی خطا|کاربر نیاز|صفحه‌خوان|چندزبانگی)'
-    efficiency_terms= r'(زمان کمتر|بهینه|کاهش تلاش|کمترین کلیک|تاخیر کمتر|اتلاف وقت|تلاش|کارایی|تاخیر|معطلی|کارآمد|دقت بیشتر|دقت)'
+    efficiency_terms= r'(زمان کمتر|بهینه|کاهش تلاش|کمترین کلیک|تاخیر کمتر|اتلاف وقت|تلاش|کارایی|تاخیر|معطلی|کارآمد|دقت بیشتر|دقت|بازخورد لحظه|خودکار)'
     #efficiency_terms= r'(سریع|بی‌درنگ|چابک|در لحظه|اتلاف وقت|تلاش|کارایی|وقفه|وقت اضافی)'
     efficienct_verbs= r'(کاهش|افزایش|بیشتر|کمتر)'
     default_terms= r'(پیش‌فرض|پیش‌فرض‌ها|پیش‌فرض‌های|پیش‌فرض‌های نرم‌افزار|پیش‌فرض نرم‌افزار|گزینه پیش‌فرض)'
@@ -107,7 +107,7 @@ class regex(Enum):
     reminder_terms= r'(یادآوری|یادآوری‌ها|یادآوری‌های|یادآوری‌های نرم‌افزار|یادآوری نرم‌افزار|یادآوری‌های نرم‌افزار|یادآوری)'
     duplicate_terms= r'(تکرار|تکرار کردن|تکرار‌کردن|تکرار نمودن|تکرار‌نمودن|مجدد|دوباره)'
     Forgetfulness_terms= r'(فراموشی|فراموشی‌ها|فراموشی‌های|فراموشی جلوگیری|فراموش)'
-    improve_terms= r'(بهبود|بهبودی|بهبودی‌ها|بهبودی‌های|بهبودی‌های نرم‌افزار|بهبود نرم‌افزار)'
+    improve_terms= r'(بهبود|بهبودی|بهبودی‌ها|بهبودی‌های|بهبودی‌های نرم‌افزار|بهبود نرم‌افزار|مدیریت بهتر|بهتر)'
     timeoflearning_terms = r'(زمان آموزش|زمان آموزشی|زمان آموزش‌ها|زمان آموزش‌های|زمان آموزش‌های نرم‌افزار|زمان آموزش نرم‌افزار|زمان یادگیری)'
     refer_terms= r'(مراجعه|مراجعه کردن|مراجعه‌کردن|مراجعه نمودن|مراجعه‌نمودن)'
     keepon_terms= r'(ادامه|ادامه دادن|ادامه‌دادن|ادامه نمودن|ادامه‌نمودن)'
@@ -121,8 +121,8 @@ class regex(Enum):
     informed_terms= r'(آگاه|آگاهی|آگاهی‌ها|آگاهی‌های|مطلع|اطلاع)'
     support_terms= r'(پشتیبانی|پشتیبانی کردن|پشتیبانی‌کردن|پشتیبانی نمودن|پشتیبانی‌نمودن|حمایت|حمایت کردن|حمایت‌کردن|حمایت نمودن|حمایت‌نمودن)'
     good_terms= r'(خوب|خوبی|خوبی‌ها|بهتر|بهتری|راحت)'
-    satisfaction_terms_pattern= r'(راحتی استفاده|کاربرپسند|سادگی|ناوبری آسان|قابل فهم|بدون پیچیدگی|قابلیت شهودی|یادگیری آسان|بدون نیاز به آموزش|کمترین کلیک ممکن|سرعت بالا|انجام سریع وظایف|کاهش تلاش کاربر|بدون نیاز به ورود اطلاعات اضافی|فرآیند یکپارچه|بازخورد فوری|نمایش پیام‌های واضح|راهنمایی کاربر|پیش‌بینی نیازهای کاربر|کنترل کامل بر عملیات|قابل بازگشت|سازگاری با دستگاه‌های مختلف|دسترسی‌پذیری|قابل استفاده در موبایل و دسکتاپ|امکان شخصی‌سازی|سازگاری با مرورگرهای مختلف|حداقل خطاهای کاربر|نمایش پیغام‌های خطای شفاف|راهنمایی گام‌به‌گام|کاهش بار شناختی کاربر|ورود اطلاعات با کمترین تلاش|ارائه پیشنهادهای هوشمند|تجربه راحت|احساس اطمینان|تجربه کاربری|لذت|تجربه شخصی|رضایت|رضایت بخش|احساس رضایت|راحت|راحتی)'
-   
+    approve_terms= r'(تایید|تایید کردن|تایید‌کردن|تایید نمودن|تایید‌نمودن|تصویب|تصویب کردن|تصویب‌کردن|تصویب نمودن|تصویب‌نمودن|تأیید|تأیید کردن|تأیید‌کردن|تأیید نمودن|تأیید‌نمودن)'
+    satisfaction_terms_pattern= r'(راحتی استفاده|کاربرپسند|سادگی|ناوبری آسان|قابل فهم|بدون پیچیدگی|قابلیت شهودی|یادگیری آسان|بدون نیاز به آموزش|کمترین کلیک ممکن|سرعت بالا|انجام سریع وظایف|کاهش تلاش کاربر|بدون نیاز به ورود اطلاعات اضافی|فرآیند یکپارچه|بازخورد فوری|نمایش پیام‌های واضح|راهنمایی کاربر|پیش‌بینی نیازهای کاربر|کنترل کامل بر عملیات|قابل بازگشت|سازگاری با دستگاه‌های مختلف|دسترسی‌پذیری|قابل استفاده در موبایل و دسکتاپ|امکان شخصی‌سازی|سازگاری با مرورگرهای مختلف|حداقل خطاهای کاربر|نمایش پیغام‌های خطای شفاف|راهنمایی گام‌به‌گام|کاهش بار شناختی کاربر|ورود اطلاعات با کمترین تلاش|ارائه پیشنهادهای هوشمند|تجربه راحت|احساس اطمینان|تجربه کاربری|لذت|تجربه شخصی|رضایت|رضایت بخش|احساس رضایت|راحت|راحتی|تجربه خرید|تجربه بهتر|احساس امنیت|سرعت استفاده|خرید سریع|مشکل)'
 learnability_pattern = [
           {'type': 'learnability 00', 'pattern':fr'{regex.training_terms.value}.+{regex.learning_terms.value}.+{regex.use_terms.value}'},
           {'type': 'learnability 02', 'pattern':fr'{regex.guide_terms.value}.+{regex.access_terms.value}.+{regex.learning_terms.value}.+{regex.use_terms.value}'},
@@ -165,8 +165,10 @@ learnability_pattern = [
           {'type': 'learnability 40', 'pattern':fr'({regex.guide_terms.value}.+{regex.product_terms.value}.+{regex.able_terms.value}.+{regex.right_terms.value}.+{regex.use_terms.value})'},
           {'type': 'learnability 41', 'pattern':fr'({regex.want_terms.value}.+{regex.change_terms.value}.+{regex.terminate_terms.value}.+{regex.able_terms.value}.+{regex.wrong_terms.value}.+{regex.learning_terms.value})'},
           {'type': 'learnability 42', 'pattern':fr'({regex.want_terms.value}.+{regex.ui_terms.value}.+{regex.clear_terms.value}.+{regex.able_terms.value}.+{regex.search_terms.value}.+{regex.Feature_terms.value}.+{regex.learning_terms.value})'},
-          {'type': 'learnability 43', 'pattern':fr'({regex.able_terms.value}.+({regex.guide_terms.value}|{regex.training_terms.value}|{regex.learning_terms.value}))'},
+          #{'type': 'learnability 43', 'pattern':fr'({regex.able_terms.value}.+({regex.guide_terms.value}|{regex.training_terms.value}|{regex.learning_terms.value}))'},
           {'type': 'learnability 44', 'pattern':fr'({regex.want_terms.value}.+({regex.guide_terms.value}|{regex.learning_terms.value}|{regex.training_terms.value}).+{regex.able_terms.value}.+{regex.ease_terms.value}(.+{regex.use_terms.value}?))'},
+          {'type': 'learnability 45', 'pattern':fr'({regex.want_terms.value}.+{regex.review_terms.value}.+{regex.error_terms.value}.+{regex.learning_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
+
     ]
 
 Memorability_pattern = [
@@ -201,6 +203,13 @@ Memorability_pattern = [
         {'type': 'Memorability 28', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.able_terms.value}.+{regex.Forgetfulness_terms.value})'},
         {'type': 'Memorability 29', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.previous_terms.value}|{regex.again_terms.value}))'},
         {'type': 'Memorability 30', 'pattern':fr'({regex.want_terms.value}.+{regex.reminder_terms.value}.+{regex.able_terms.value}.+{regex.use_terms.value})'},
+        {'type': 'Memorability 31', 'pattern':fr'({regex.want_terms.value}.+{regex.reminder_terms.value}.*{regex.setting_terms.value}.+{regex.able_terms.value}.+{regex.Forgetfulness_terms.value})'},
+        {'type': 'Memorability 32', 'pattern':fr'({regex.want_terms.value}.+{regex.suggestion_terms.value}.*{regex.previous_terms.value}.+{regex.observe_terms.value}.+{regex.able_terms.value}.+{regex.ease_terms.value})'},
+        {'type': 'Memorability 33', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.access_terms.value}.+{regex.able_terms.value}.+({regex.improve_terms.value}|{regex.ease_terms.value}|{regex.Forgetfulness_terms.value}|{regex.use_terms.value}|{regex.fast_terms.value}|{regex.learning_terms.value}))'},
+        {'type': 'Memorability 34', 'pattern':fr'({regex.want_terms.value}.+{regex.order_terms.value}.+{regex.status_terms.value}.+{regex.able_terms.value}.+({regex.learning_terms.value}|{regex.Forgetfulness_terms.value}))'},
+        {'type': 'Memorability 35', 'pattern':fr'({regex.want_terms.value}.+{regex.save_terms.value}.+{regex.able_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}))'},
+
+
 
 
     ]
@@ -231,6 +240,8 @@ error_pattern = [
         {'type': 'error 22', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.able_terms.value}.+({regex.execute_terms.value}|{regex.review_terms.value}))'},
         {'type': 'error 23', 'pattern':fr'({regex.want_terms.value}.+({regex.error_terms.value}|{regex.question_terms.value}).+{regex.support_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+({regex.change_terms.value}|{regex.solve_terms.value}|{regex.prevention_terms.value}))'},
         {'type': 'error 24', 'pattern':fr'({regex.want_terms.value}.+({regex.error_terms.value}|{regex.question_terms.value}).+{regex.support_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value})'},
+        {'type': 'error 25', 'pattern':fr'({regex.want_terms.value}.+{regex.approve_terms.value}.+{regex.dangerious_terms.value}.+{regex.able_terms.value}.+{regex.prevention_terms.value})'},
+        {'type': 'error 26', 'pattern':fr'({regex.want_terms.value}.+{regex.review_terms.value}.+{regex.error_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
 
 
 
@@ -297,8 +308,18 @@ efficiencyuse_pattern = [
          {'type': 'efficiencyuse 50', 'pattern':fr'({regex.want_terms.value}.+{regex.filter_terms.value}.+{regex.have_terms.value}.+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
          {'type': 'efficiencyuse 51', 'pattern':fr'({regex.able_terms.value}.+{regex.task_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value})))'},
          {'type': 'efficiencyuse 52', 'pattern':fr'({regex.want_terms.value}.+(({regex.filter_terms.value}.+{regex.Feature_terms.value})|{regex.search_terms.value}).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|({regex.use_terms.value}|{regex.find_terms.value}))))'},
-         {'type': 'efficiencyuse 53', 'pattern':fr'({regex.want_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms}).+{regex.able_terms.value}.+{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))'},
-         {'type': 'efficiencyuse 54', 'pattern':fr'({regex.want_terms.value}.+(({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms})?!.*({regex.learning_terms.value}|{regex.training_terms.value}|{regex.guide_terms.value})).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))?!.*{regex.learning_terms.value})'},
+         {'type': 'efficiencyuse 53', 'pattern':fr'({regex.want_terms.value}.+({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms.value}).+{regex.able_terms.value}.+{regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))'},
+         {'type': 'efficiencyuse 54', 'pattern':fr'({regex.want_terms.value}.+(({regex.ease_terms.value}|{regex.fast_terms.value}|{regex.efficiency_terms.value})?!.*({regex.learning_terms.value}|{regex.training_terms.value}|{regex.guide_terms.value})).+{regex.able_terms.value}.+({regex.efficiency_terms.value}|({regex.time_terms.value}.+{regex.efficienct_verbs})|({regex.fast_terms.value}|{regex.use_terms.value}))?!.*{regex.learning_terms.value})'},
+         {'type': 'efficiencyuse 55', 'pattern':fr'({regex.want_terms.value}.+{regex.event_terms.value}.+{regex.access_terms.value}.+{regex.able_terms.value}.+({regex.improve_terms.value}|{regex.ease_terms.value}|{regex.Forgetfulness_terms.value}|{regex.use_terms.value}|{regex.fast_terms.value}|{regex.learning_terms.value}))'},
+         {'type': 'efficiencyuse 56', 'pattern':fr'({regex.want_terms.value}.+{regex.customize_terms.value}.+{regex.able_terms.value}.+({regex.experience_terms.value}|{regex.ease_terms.value}|{regex.Forgetfulness_terms.value}|{regex.use_terms.value}|{regex.fast_terms.value}|{regex.learning_terms.value}))'},
+         {'type': 'efficiencyuse 57', 'pattern':fr'({regex.want_terms.value}.+{regex.ease_terms.value}.+{regex.feedback_terms.value}.+{regex.able_terms.value}.+{regex.improve_terms.value})'},
+         {'type': 'efficiencyuse 58', 'pattern':fr'({regex.want_terms.value}.+{regex.ease_terms.value}.+{regex.able_terms.value})'},
+         {'type': 'efficiencyuse 59', 'pattern':fr'({regex.want_terms.value}.+{regex.notification_terms.value}.+{regex.wrong_terms.value}.+{regex.able_terms.value}.+({regex.wrong_terms.value}|{regex.prevention_terms.value}))'},
+         {'type': 'efficiencyuse 60', 'pattern':fr'({regex.want_terms.value}.+{regex.review_terms.value}.+{regex.error_terms.value}.+{regex.able_terms.value}.+{regex.error_terms.value}.+{regex.prevention_terms.value})'},
+         {'type': 'efficiencyuse 61', 'pattern':fr'({regex.able_terms.value}.+{regex.ease_terms.value})'},
+
+
+
     ]
 
 satisfaction_patterns = [

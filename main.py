@@ -105,7 +105,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
                 arr.append({'type':p['type']})
                 print('Nonfunctional user stories are extracted')
                 pattern_type = error_pattern
-                pattern_name = 'خطاها'
+                pattern_name = 'مدیریت خطاها'
                 matched = True
                 return arr, pattern_type, pattern_name           
     if not matched:
@@ -140,7 +140,7 @@ def other_nonfunctional_requirements(pattern_type, lemma_userstory: str) -> list
     for p in error_pattern:
         if pattern_type != error_pattern:
             if re.search(p['pattern'], lemma_userstory):
-                arr.append('خطاها')      
+                arr.append('مدیریت خطاها')      
     for p in efficiencyuse_pattern:
         if pattern_type != efficiencyuse_pattern:
             if re.search(p['pattern'], lemma_userstory):

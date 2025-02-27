@@ -105,7 +105,7 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
                 arr.append({'type':p['type']})
                 print('Nonfunctional user stories are extracted')
                 pattern_type = error_pattern
-                pattern_name = 'خطاها'
+                pattern_name = 'قابلیت استفاده (مدیریت خطاها)'
                 matched = True
                 return arr, pattern_type, pattern_name           
     if not matched:
@@ -126,6 +126,12 @@ def userstory_nonfunctional(lemma_userstory: str) -> list:
                 pattern_name = 'رضایتمندی کاربر'
                 matched = True
                 return arr, pattern_type, pattern_name
+    if not matched:
+        print('no pattern matched')
+        arr=['الگویی یافت نشد']
+        pattern_type = 'empty'
+        pattern_name = 'الگویی یافت نشد' 
+        return arr, pattern_type, pattern_name
             
 def other_nonfunctional_requirements(pattern_type, lemma_userstory: str) -> list:
     arr = [] 
@@ -133,22 +139,27 @@ def other_nonfunctional_requirements(pattern_type, lemma_userstory: str) -> list
         if pattern_type != satisfaction_patterns:
             if re.search(p['pattern'], lemma_userstory):
                 arr.append('رضایتمندی کاربر')
+                break
     for p in learnability_pattern:
         if pattern_type != learnability_pattern:
             if re.search(p['pattern'], lemma_userstory):
                 arr.append('سهولت یادگیری')
+                break
     for p in error_pattern:
         if pattern_type != error_pattern:
             if re.search(p['pattern'], lemma_userstory):
-                arr.append('خطاها')      
+                arr.append('قابلیت استفاده (مدیریت خطاها)')
+                break      
     for p in efficiencyuse_pattern:
         if pattern_type != efficiencyuse_pattern:
             if re.search(p['pattern'], lemma_userstory):
-                arr.append('کارایی استفاده') 
+                arr.append('کارایی استفاده')
+                break 
     for p in Memorability_pattern:
         if pattern_type != Memorability_pattern:
             if re.search(p['pattern'], lemma_userstory):
                 arr.append('حفظ یادگیری')
+                break
     return '-'.join(arr)
    
 
